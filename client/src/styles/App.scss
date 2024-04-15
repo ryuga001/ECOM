@@ -23,6 +23,60 @@
 
  @import "./mixin.scss";
 
+ .LoginContainer {
+     width: 100vw;
+     height: 100vh;
+     @include flex();
+     background-color: $color1;
+
+     >form {
+         @include flex(column);
+         width: 30vw;
+         height: 50vh;
+         background-color: $color2;
+         border-radius: 1rem;
+
+         >div {
+             @include grid(2fr 1fr, 0rem);
+             width: 20vw;
+             //  height: 5vh;
+             font-size: larger;
+
+             >label {
+                 color: white;
+             }
+
+             >input {
+                 font-size: large;
+                 border: none;
+                 background-color: $color2;
+                 color: white;
+                 border-bottom: 1px solid gray;
+             }
+
+         }
+
+         >p {
+             cursor: pointer;
+             color: white;
+             text-decoration: underline black 1px;
+         }
+
+         >button {
+             height: 7vh;
+             width: 10vw;
+             cursor: pointer;
+             border-radius: 1rem;
+             border: none;
+             background-color: $color3;
+             font-size: large;
+
+             &:hover {
+                 scale: 1.1;
+             }
+         }
+     }
+ }
 
  .NavBarContainer {
      @include flex(row, space-between, center, 1rem);
@@ -40,19 +94,40 @@
      >div {
          @include flex(row, space-between, center, 0.5rem);
 
+         >span {
+             //  border: 1px solid black;
+             min-height: 1.5rem;
+             min-width: 1rem;
+             @include flex();
+             border-radius: 50%;
+             padding: 1px;
+             font-size: large;
+             position: absolute;
+             margin-left: 1.3rem;
+             margin-top: 1.3rem;
+             background-color: red;
+             color: white;
+         }
+
          >div {
+
              >div {
                  position: absolute;
                  margin-top: -0.3rem;
                  padding: 0.5rem;
                  padding-top: 0;
 
+
                  >dialog {
-                     border: 1px solid black;
+                     //  border: 1px solid black;
+                     //  position: absolute;
+                     //  margin-top: -1rem;
+
+                     border: none;
 
                      >ul {
                          >li {
-                             background-color: $color3;
+                             background-color: $color5;
                              cursor: pointer;
                              font-weight: 500;
                              padding: .3rem;
@@ -373,6 +448,285 @@
          >button {
              cursor: pointer;
              padding: .2rem;
+         }
+     }
+ }
+
+ .CartContainer {
+     @include flex(column);
+     background-color: $color1;
+     min-height: 100vh;
+
+     >div {
+         @include flex();
+         padding: 2rem;
+     }
+
+     >table {
+         margin: 2rem;
+         width: 80vw;
+         min-height: 30vh;
+         //  max-height: 50vh;
+         //  overflow: hidden;
+         background-color: $color5;
+         font-size: large;
+         border-radius: 1rem;
+         padding: 1rem;
+
+         >span {
+             @include flex(column);
+
+             >p {
+                 color: gray;
+                 font-size: medium;
+             }
+
+             //  align-self: center;
+         }
+
+         >thead {
+             height: 5vh;
+             background-color: $color4;
+             color: whitesmoke;
+         }
+
+         >tbody {
+             >tr {
+                 //  padding: 1rem;
+
+                 >td {
+                     padding: 0.5rem 0rem;
+                     padding-left: 3rem;
+
+                     >img {
+
+                         height: 5rem;
+                     }
+
+                     >button {
+                         height: 2rem;
+                         width: 2rem;
+                         background-color: red;
+                         cursor: pointer;
+                         border-radius: 1rem;
+
+                         &:hover {
+                             scale: 1.1;
+                         }
+                     }
+                 }
+             }
+         }
+
+         >tfoot {
+             >tr {
+                 //  @include flex(row, space-between, center, 0rem);
+
+                 >td {
+
+                     //  justify-content: flex-end;
+                     padding-left: 2rem;
+
+
+                 }
+
+             }
+
+
+         }
+
+     }
+
+     >div {
+         >button {
+             height: 8vh;
+             width: 15vw;
+             background-color: $color4;
+             border: none;
+             border-radius: 1rem;
+             font-size: large;
+             color: whitesmoke;
+
+             &:hover {
+                 scale: 1.1;
+                 cursor: pointer;
+             }
+         }
+     }
+ }
+
+
+ .PlaceOrderContainer {
+     background-color: $color1;
+     width: 100vw;
+     min-height: 100vh;
+     @include grid(2fr 3fr);
+     align-items: center;
+     justify-items: center;
+     overflow: hidden;
+
+
+     >aside {
+
+         >h2 {
+             color: gray;
+             padding: 1rem 2rem;
+         }
+
+         >form {
+             @include flex(column);
+             background-color: $color2;
+             padding: 2rem;
+             border-radius: 1rem;
+
+             >div {
+                 @include grid(0.5fr 1fr);
+
+                 >label {
+                     font-size: large;
+                     color: whitesmoke;
+                 }
+
+                 >input {
+                     border: none;
+                     color: whitesmoke;
+                     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                     //  border-radius: .5rem;
+                     background-color: $color2;
+                     border-bottom: 1px solid $color3 ;
+                 }
+             }
+
+             >button {
+                 width: 10vw;
+                 height: 5vh;
+                 border: none;
+                 border-radius: .5rem;
+                 font-size: large;
+                 background-color: $color3;
+
+                 //  color: white;
+                 &:hover {
+                     scale: 1.1;
+                     cursor: pointer;
+                 }
+             }
+         }
+
+     }
+
+     >main {
+
+
+         >h2 {
+             color: gray;
+             padding: 0rem 5rem;
+         }
+
+         >table {
+
+             margin: 2rem;
+             width: 50vw;
+             min-height: 30vh;
+             //  max-height: 50vh;
+             //  overflow: hidden;
+             background-color: $color5;
+             font-size: large;
+             border-radius: 1rem;
+             padding: 1rem;
+
+
+             >tbody {
+
+                 >tr {
+                     //  padding: 1rem;
+
+                     >td {
+                         padding: 0.5rem 0rem;
+                         padding-left: 3rem;
+
+                         >img {
+
+                             height: 5rem;
+                         }
+
+                         >button {
+                             height: 2rem;
+                             width: 2rem;
+                             background-color: red;
+                             cursor: pointer;
+                             border-radius: 1rem;
+
+                             &:hover {
+                                 scale: 1.1;
+                             }
+                         }
+                     }
+
+                 }
+
+             }
+
+
+
+             >tfoot {
+                 >tr {
+                     //  @include flex(row, space-between, center, 0rem);
+
+                     >td {
+                         padding: 0.5rem 0rem;
+                         padding-left: 3rem;
+                         //  justify-content: flex-end;
+                         padding-left: 2rem;
+
+
+                     }
+
+                 }
+
+
+             }
+
+         }
+     }
+ }
+
+
+ .MyOrderContainer {
+     background-color: $color1;
+     width: 100vw;
+     min-height: 100vh;
+
+     >main {
+
+
+         >h2 {
+             @include flex();
+             padding: 2rem;
+         }
+
+         >table {
+             @include flex();
+
+             >tbody {
+                 @include flex(column);
+                 width: 60vw;
+                 min-height: 30vh;
+                 padding: 3rem;
+                 background-color: $color5;
+                 border-radius: 1rem;
+                 //  overflow: scroll;
+
+                 //  &::-webkit-scrollbar {
+                 //      display: hidden;
+                 //  }
+
+                 >tr {
+                     @include grid(1fr 1fr 1fr, 12rem);
+
+
+                 }
+             }
          }
      }
  }

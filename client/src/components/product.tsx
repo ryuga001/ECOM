@@ -1,67 +1,44 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react';
 import { FaArrowCircleRight } from 'react-icons/fa';
-import { FaShareNodes } from 'react-icons/fa6';
 import ProductCard from './productcard';
-// const categories = [
-//     { name: "Apparel and Fashion" },
-//     { name: "Electronics" },
-//     { name: "Beauty and Personal Care" },
-//     { name: "Home and Kitchen" },
-//     { name: "Health and Wellness" },
-//     { name: "Books and Media" },
-//     { name: "Toys and Games" },
-//     { name: "Sports and Outdoors" },
-//     { name: "Grocery and Food" },
-//     { name: "Automotive" },
-//     { name: "Apparel and Fashion" },
-//     { name: "Electronics" },
-//     { name: "Beauty and Personal Care" },
-//     { name: "Home and Kitchen" },
-//     { name: "Health and Wellness" },
-//     { name: "Books and Media" },
-//     { name: "Toys and Games" },
-//     { name: "Sports and Outdoors" },
-//     { name: "Grocery and Food" },
-//     { name: "Automotive" },
-// ]
+import axios from 'axios';
+interface itemType {
+    id: string,
+    name: string,
+    description: string,
+    ratings: number,
+    price: number,
+    imgUrl?: string,
+}
+
 
 const Product = () => {
-    const item =
-    {
-        _id: "6619ea48c112fa07f48b1ae8",
-        name: "tshirt",
-        description: "this is a t shirt for men ",
-        price: 669,
-        ratings: 0,
-        images: [
-            {
-                imageId: "4e234653-bdd4-400a-a75a-0820773c842e.png",
-                url: "https://m.media-amazon.com/images/I/91eY68L5j9L._SX569_.jpg",
-            },
-            {
-                imageId: "459ebc09-8351-45ae-b13a-74522ba88200.png",
-                url: "\\Users\\rahul\\OneDrive\\Desktop\\New folder\\server\\uploads\\459ebc09-8351-45ae-b13a-74522ba88200.png",
-            },
-            {
-                imageId: "e83cfa20-0406-47a7-9555-f2a7d4024d3c.png",
-                url: "\\Users\\rahul\\OneDrive\\Desktop\\New folder\\server\\uploads\\e83cfa20-0406-47a7-9555-f2a7d4024d3c.png",
-            },
-            {
-                imageId: "4cc7be4c-feeb-49a2-b59c-475ce2dc3377.png",
-                url: "\\Users\\rahul\\OneDrive\\Desktop\\New folder\\server\\uploads\\4cc7be4c-feeb-49a2-b59c-475ce2dc3377.png",
-            },
-            {
-                imageId: "aaabc926-2a78-4247-aca3-c74d6a3569d1.png",
-                url: "\\Users\\rahul\\OneDrive\\Desktop\\New folder\\server\\uploads\\aaabc926-2a78-4247-aca3-c74d6a3569d1.png",
+    const [products, setProducts] = useState<Array<itemType>>([]);
+    const [categories, setCategories] = useState<Array<string>>([]);
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const res = await axios.get("http://localhost:5000/api/v1/product/allProducts");
+            if (res.data.success) {
+                const tempProduct: Array<itemType> = [];
+                const tempCat: Array<string> = [];
+                res.data.data.forEach((item: any) => {
+                    tempCat.push((item.category).toUpperCase());
+                    tempProduct.push({
+                        id: item._id,
+                        name: item.name,
+                        description: item.description,
+                        ratings: item.ratings,
+                        price: item.price,
+                        // imgUrl: item.images[0].url ? item.images[0].url : "",
+                    })
+                })
+                setCategories(tempCat);
+                setProducts(tempProduct);
             }
-        ],
-        category: "clothes",
-        stock: 1,
-        numOfReviews: 0,
-        user: "6618148ba63df242a1129a84",
-        reviews: [],
-    }
-
+        }
+        fetchProducts();
+    }, [])
+    console.log(categories);
     const [price, setprice] = useState<number>(0);
     return (
         <div className="ProductContainer">
@@ -72,14 +49,14 @@ const Product = () => {
                         <h3>Categories</h3>
                         <ul>
                             <li>All</li>
-                            {/* {
-                                categories.map((item) => {
+                            {
+                                categories.length > 0 && categories.map((item) => {
                                     return (
-                                        <li><option>{item.name}</option></li>
+                                        <li><option>{item}</option></li>
                                     )
                                 }
                                 )
-                            } */}
+                            }
                         </ul>
                     </div>
                     <div>
@@ -99,14 +76,12 @@ const Product = () => {
                     <FaArrowCircleRight style={{ cursor: "pointer" }} size={30} />
                 </div>
                 <div>
-                    <ProductCard pid={item._id} name={item.name} description={item.description} imgUrl={item.images[0].url} price={item.price} ratings={item.ratings} />
-                    <ProductCard pid={item._id} name={item.name} description={item.description} imgUrl={item.images[0].url} price={item.price} ratings={item.ratings} />
-                    <ProductCard pid={item._id} name={item.name} description={item.description} imgUrl={item.images[0].url} price={item.price} ratings={item.ratings} />
-                    <ProductCard pid={item._id} name={item.name} description={item.description} imgUrl={item.images[0].url} price={item.price} ratings={item.ratings} />
-                    <ProductCard pid={item._id} name={item.name} description={item.description} imgUrl={item.images[0].url} price={item.price} ratings={item.ratings} />
-                    <ProductCard pid={item._id} name={item.name} description={item.description} imgUrl={item.images[0].url} price={item.price} ratings={item.ratings} />
-                    <ProductCard pid={item._id} name={item.name} description={item.description} imgUrl={item.images[0].url} price={item.price} ratings={item.ratings} />
-                    <ProductCard pid={item._id} name={item.name} description={item.description} imgUrl={item.images[0].url} price={item.price} ratings={item.ratings} />
+                    {
+                        products.length > 0 &&
+                        products.map((item: itemType) => (
+                            <ProductCard pid={item.id} name={item.name} description={item.description} imgUrl={item.imgUrl} price={item.price} ratings={item.ratings} />
+                        ))
+                    }
 
                 </div>
             </main>

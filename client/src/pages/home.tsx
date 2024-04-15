@@ -1,6 +1,5 @@
 import NavBar from "../components/navbar"
 import Product from "../components/product"
-import SideBar from "../components/sidebar"
 
 const Home = () => {
     return (
