@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { FaArrowAltCircleLeft, FaArrowCircleRight } from "react-icons/fa";
+import { useState } from "react";
+import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
 interface imgaeType {
-    imageId: string,
+    imageId?: string,
     url: string,
 }
 
@@ -25,7 +25,7 @@ const Slider = ({ images }: SliderType) => {
             <img src={images[index].url} />
             {/* <p>{images[index].url}</p> */}
             <div>
-                <FaArrowAltCircleLeft style={{ cursor: "pointer" }} onClick={decrement} size={30} />
+                <FaArrowCircleLeft style={{ cursor: "pointer" }} onClick={decrement} size={30} />
                 <button>{index + 1}</button>
                 <FaArrowCircleRight style={{ cursor: "pointer" }} onClick={increment} size={30} />
             </div>

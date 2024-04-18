@@ -46,6 +46,7 @@ export const loginUser = TryCatch(async (req, res, next) => {
     return res.status(200).cookie("token", token, options).json({
         message: "user login successfully",
         success: true,
+        // data: user,
     });
 });
 export const logout = TryCatch(async (req, res, next) => {

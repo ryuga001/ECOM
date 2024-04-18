@@ -1,0 +1,19 @@
+USER ONLY /-
+register ✅ with profile image
+login ✅
+home page ✅
+cart ✅
+place order 
+payment interagtion and validation 
+my order 
+logout 
+
+
+ADMIN ONLY /-
+allusers 
+allproducts
+charts - male/female , categories 
+allorders 
+updateProduct 
+updateUser to Admin 
+orderStatus Updation 

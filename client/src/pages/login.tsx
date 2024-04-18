@@ -40,10 +40,10 @@ const Login = () => {
                 );
 
                 if (response.data.success) {
-                    console.log(response.data);
+                    // console.log(response.data);
                     const user = response.data.data;
                     dispatch(setUser({
-                        id: user.id,
+                        id: user._id,
                         username: user.username,
                         email: user.email,
                         profileImage: user.avatar,

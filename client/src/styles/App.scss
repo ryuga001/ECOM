@@ -203,7 +203,7 @@
  .ProductContainer {
      //  background-color: $color1;
      width: 90vw;
-     min-height: 100vh;
+     min-height: 80vh;
      //  background-color: $color5;
 
      @include grid(1fr 4fr, 2rem);
@@ -272,8 +272,23 @@
                      }
                  }
 
-
              }
+
+             >button {
+                 //  justify-self: center;
+                 background-color: $color4;
+                 margin-left: 8vh;
+                 height: 2rem;
+                 padding: .5rem;
+                 border: none;
+                 border-radius: .5rem;
+
+                 &:hover {
+                     scale: 1.05;
+                     cursor: pointer;
+                 }
+             }
+
          }
      }
 
@@ -281,20 +296,11 @@
          background-color: $color5;
          flex: 4;
          border-radius: 1rem;
-
+         //  min-height: 100vh;
          @include flex(column, flex-start);
          padding: 1rem;
 
-         >div {
-             @include flex(row, center, center, 0);
 
-             >input {
-                 min-width: 1rem;
-                 height: 2.5rem;
-                 border-radius: 1rem;
-                 padding: 0.5rem;
-             }
-         }
 
          >div {
              @include grid(1fr 1fr 1fr 1fr, 1rem);
@@ -407,7 +413,7 @@
 
  .ReviewContainer {
      background-color: $color1;
-     @include flex();
+     @include flex(column);
 
      >div {
          min-height: 30vh;
@@ -415,6 +421,31 @@
          background-color: $color5;
          padding: 1rem;
          border-radius: 1rem;
+
+         >main {
+
+             //  @include flex(column, flex-start);
+             >div {
+                 padding-bottom: 1rem;
+
+                 >h3 {
+                     padding-left: 1rem;
+                 }
+
+                 >div {
+                     @include flex(row, space-between, flex-start);
+                     width: 80vw;
+                     background-color: rgb(147, 141, 141);
+                     padding: 1rem;
+                     color: white;
+                     border-radius: 1rem;
+
+                     >div {
+                         @include flex(row, center, center, 0rem);
+                     }
+                 }
+             }
+         }
      }
  }
 
@@ -729,4 +760,22 @@
              }
          }
      }
+ }
+
+ .SearchBox {
+
+     >div {
+
+         @include flex(row, center, center, 0rem);
+
+         >input {
+             min-width: 1rem;
+             height: 2.5rem;
+             border-radius: 1rem;
+             padding: 0.5rem;
+             //  width: 5rem;
+             //  @include flex();
+         }
+     }
+
  }

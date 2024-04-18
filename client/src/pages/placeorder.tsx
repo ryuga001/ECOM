@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../store/hook";
 import { FaBagShopping } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
+import NavBar from "../components/navbar";
 
 interface OrderItemType {
     name: string,
@@ -92,6 +93,7 @@ const PlaceOrder = () => {
     return (
         <>
             {/* <FaHome style={{ cursor: "pointer", margin: "1rem", }} size={25} /> */}
+            <NavBar />
             <div className='PlaceOrderContainer'>
                 <aside>
                     <h2>Shipping Details</h2>

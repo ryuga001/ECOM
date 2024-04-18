@@ -2,6 +2,7 @@ import { FaCartShopping } from 'react-icons/fa6';
 import { removeProduct } from '../store/cartSlice';
 import { useAppDispatch, useAppSelector } from "../store/hook";
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../components/navbar';
 export interface ProductType {
     id: string,
     name: string,
@@ -51,18 +52,19 @@ const Cart = () => {
     }
     const navigate = useNavigate();
     return (
-
-        <div className="CartContainer">
-            {/* <table {...getTableProps()}>
+        <>
+            <NavBar />
+            <div className="CartContainer">
+                {/* <table {...getTableProps()}>
                 <thead>
                     {
                         headerGroups.map((hg) => (
                             <tr {...hg.getHeaderGroupProps()} >
-                                {
-                                    hg.headers.map((header) => (
-                                        <th {...header.getHeaderProps()} >{header.render("Header")}</th>
-                                    ))
-                                }
+                            {
+                                hg.headers.map((header) => (
+                                    <th {...header.getHeaderProps()} >{header.render("Header")}</th>
+                                ))
+                            }
                             </tr>
                         ))
                     }
@@ -72,92 +74,93 @@ const Cart = () => {
                         rows.map(row => {
                             prepareRow(row)
                             return <tr {...row.getRowProps()}>
-                                {
-                                    row.cells.map((cell) => (
-                                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                                    ))
-                                }
+                            {
+                                row.cells.map((cell) => (
+                                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                                ))
+                            }
                             </tr>
                         })
                     }
-                </tbody>
-            </table> */}
-            <div>
+                    </tbody>
+                </table> */}
+                <div>
 
-                < FaCartShopping size={60} color='gray' />
-            </div>
-            <table>
-                {
-                    cartProduct.length > 0 ?
-                        <>
-                            <thead>
-                                {/* <tr>
+                    < FaCartShopping size={60} color='gray' />
+                </div>
+                <table>
+                    {
+                        cartProduct.length > 0 ?
+                            <>
+                                <thead>
+                                    {/* <tr>
                                     <th></th>
-
+                                    
                                     <th>Name</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
                                     <th></th>
                                 </tr> */}
-                            </thead>
-                            <tbody>
-                                {
-                                    cartProduct.map((item, index) =>
-                                    (
+                                </thead>
+                                <tbody>
+                                    {
+                                        cartProduct.map((item, index) =>
+                                        (
 
-                                        <tr key={index}>
-                                            <td>
-                                                <img src={item.imgUrl} />
-                                            </td>
+                                            <tr key={index}>
+                                                <td>
+                                                    <img src={item.imgUrl} />
+                                                </td>
 
-                                            <td>
-                                                {item.name}
-                                            </td>
-                                            <td>{item.quantity}</td>
-                                            <td>Rs.{item.price}/-</td>
-                                            <td>
-                                                <button onClick={() => RemoveFromCart(item.id)
-                                                }>X</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                    )
-                                }
-                            </tbody>
-                            <tfoot>
+                                                <td>
+                                                    {item.name}
+                                                </td>
+                                                <td>{item.quantity}</td>
+                                                <td>Rs.{item.price}/-</td>
+                                                <td>
+                                                    <button onClick={() => RemoveFromCart(item.id)
+                                                    }>X</button>
+                                                </td>
+                                            </tr>
+                                        )
+                                        )
+                                    }
+                                </tbody>
+                                <tfoot>
 
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <th>
-                                        Total Amount :
-                                    </th>
-                                    <td>
-                                        {/* < hr /> */}
-                                        Rs.{priceCalculate()
-                                        }/-</td>
-                                </tr>
-                            </tfoot>
-                        </>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <th>
+                                            Total Amount :
+                                        </th>
+                                        <td>
+                                            {/* < hr /> */}
+                                            Rs.{priceCalculate()
+                                            }/-</td>
+                                    </tr>
+                                </tfoot>
+                            </>
 
-                        : <>
+                            : <>
 
-                            <span>
-                                <p>
-                                    Cart is Empty
-                                </p>
+                                <span>
+                                    <p>
+                                        Cart is Empty
+                                    </p>
 
-                            </span>
-                        </>
+                                </span>
+                            </>
+                    }
+                </table>
+                {
+                    cartProduct.length > 0 &&
+                    <div>
+                        <button onClick={() => navigate("/place_order")} >Place Order</button>
+                    </div>
                 }
-            </table>
-            {
-                cartProduct.length > 0 &&
-                <div>
-                    <button onClick={() => navigate("/place_order")} >Place Order</button>
-                </div>
-            }
-        </div >
+            </div >
+        </>
     )
 }
 

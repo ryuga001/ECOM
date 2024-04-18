@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { TryCatch } from "../middleware/error.js";
 import Product from "../models/product.js";
-import { AuthenticatedProductRequest, AuthenticatedRequest, AuthenticatedRequestReview, ImagesTypeProduct, RequestReviewBody } from "../utils/types.js";
-import ErrorHandler from "../utils/utility-class.js";
-import ApiFeatures from "../utils/apifeatures.js";
 import User from "../models/user.js";
+import ApiFeatures from "../utils/apifeatures.js";
+import { AuthenticatedProductRequest, AuthenticatedRequest, AuthenticatedRequestReview, ImagesTypeProduct } from "../utils/types.js";
+import ErrorHandler from "../utils/utility-class.js";
 
 // admin only
 export const createProduct = TryCatch(
@@ -74,7 +74,18 @@ export const getAllProducts = TryCatch(
         })
     }
 )
-
+// export const getAllCategories = TryCatch(
+//     async (req: Request, res: Response, next: NextFunction) => {
+//         const product = await Product.find({});
+//         let category = product.map((item: any) => (item.category
+//         ))
+//         category = Array.from(new Set(category));
+//         return res.status(200).json({
+//             success: true,
+//             data: category,
+//         })
+//     }
+// )
 export const getProductDetails = TryCatch(
     async (req: Request, res: Response, next: NextFunction) => {
         const product = await Product.findById(req.params.id);
@@ -150,9 +161,9 @@ export const deleteReview = TryCatch(
         const product = await Product.findById(req.params.id);
         if (!product) return next(new ErrorHandler("Product Not Found", 404));
 
-        const reviews = product.reviews.filter((rev: any) => {
-            (rev._id.toString() !== req.params.reviewId.toString() && rev.user.toString() === req.userId?.toString())
-        })
+        const reviews = product.reviews.filter((rev) =>
+            (rev._id ? rev._id.toString() !== req.params.reviewId : "")
+        )
 
         let avg = 0;
         reviews.forEach((rev: any) => {
