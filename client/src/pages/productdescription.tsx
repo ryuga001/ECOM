@@ -2,13 +2,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { IoSend } from 'react-icons/io5';
+import { MdDelete } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/navbar';
 import { addProduct } from '../store/cartSlice';
 import { useAppDispatch, useAppSelector } from '../store/hook';
-import { MdDelete } from 'react-icons/md';
 import Slider from '../components/slider';
-import { FaSquareMinus } from 'react-icons/fa6';
 
 interface ReviewFormDataType {
     comment: string,
@@ -125,7 +124,7 @@ const ProductDescription = () => {
             <NavBar />
             <div className="ProductDescriptionContainer">
                 <aside>
-                    {/* <Slider images={product.images} /> */}
+                    <Slider images={product.images} />
                 </aside>
                 <main>
                     <div>

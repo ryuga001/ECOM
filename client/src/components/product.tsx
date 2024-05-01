@@ -11,8 +11,6 @@ interface itemType {
     imgUrl?: string,
     category: string,
 }
-
-
 const Product = () => {
     const [products, setProducts] = useState<Array<itemType>>([]);
     const [categories, setCategories] = useState<Array<string>>([]);
@@ -23,6 +21,7 @@ const Product = () => {
         if (res.data.success) {
             const tempProduct: Array<itemType> = [];
             res.data.data.forEach((item: any) => {
+                console.log(item.images);
                 tempProduct.push({
                     id: item._id,
                     name: item.name,
@@ -30,7 +29,7 @@ const Product = () => {
                     ratings: item.ratings,
                     price: item.price,
                     category: item.category,
-                    // imgUrl: item.images[0].url ? item.images[0].url : "",
+                    imgUrl: item.images[0].url
                 })
             })
             setProducts(tempProduct);

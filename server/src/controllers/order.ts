@@ -1,10 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { TryCatch } from "../middleware/error.js";
-import { AuthenticatedOrderRequest, AuthenticatedRequest, orderItemsObjectType } from "../utils/types.js";
 import Order from "../models/order.js";
 import Product from "../models/product.js";
+import { AuthenticatedOrderRequest, AuthenticatedRequest } from "../utils/types.js";
 import ErrorHandler from "../utils/utility-class.js";
-import { log } from "console";
 
 
 

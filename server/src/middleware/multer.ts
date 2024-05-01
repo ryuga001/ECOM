@@ -1,9 +1,9 @@
 import multer from "multer";
 import { v4 as uuid } from "uuid";
-// import 
+
 const storage = multer.diskStorage({
     destination(req, file, cb) {
-        cb(null, "/Users/rahul/OneDrive/Desktop/New folder/server/uploads");
+        cb(null, "/Users/rahul/OneDrive/Desktop/New folder/client/src/assets");
     },
     filename(req, file, cb) {
         const id = uuid();

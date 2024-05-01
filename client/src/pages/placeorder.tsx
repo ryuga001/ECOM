@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../store/hook";
-import { FaBagShopping } from "react-icons/fa6";
-import { FaHome } from "react-icons/fa";
 import NavBar from "../components/navbar";
+import { useAppSelector } from "../store/hook";
 
 interface OrderItemType {
     name: string,
@@ -10,7 +8,7 @@ interface OrderItemType {
     quantity: number,
     imageUrl: string,
     product: string,
-    // _id: string,
+    _id?: string,
 }
 interface paymentInfoType {
     id: string,

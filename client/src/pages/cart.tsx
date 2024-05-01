@@ -44,6 +44,7 @@ const Cart = () => {
 
         cartProduct.forEach((item: ProductType) => {
             total += item.price * item.quantity;
+            console.log(item.imgUrl);
         })
         return total;
     }
@@ -88,19 +89,20 @@ const Cart = () => {
 
                     < FaCartShopping size={60} color='gray' />
                 </div>
+
                 <table>
                     {
                         cartProduct.length > 0 ?
                             <>
                                 <thead>
-                                    {/* <tr>
-                                    <th></th>
-                                    
-                                    <th>Name</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th></th>
-                                </tr> */}
+                                    <tr>
+                                        <th></th>
+
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     {
@@ -153,6 +155,7 @@ const Cart = () => {
                             </>
                     }
                 </table>
+
                 {
                     cartProduct.length > 0 &&
                     <div>

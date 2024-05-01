@@ -3,7 +3,7 @@ import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
 interface imgaeType {
     imageId?: string,
-    url: string,
+    url?: string,
 }
 
 interface SliderType {
@@ -22,7 +22,7 @@ const Slider = ({ images }: SliderType) => {
     }
     return (
         <div className="SliderContainer">
-            <img src={images[index].url} />
+            {images.length > 0 && <img src={images[index].url} alt="loading" />}
             {/* <p>{images[index].url}</p> */}
             <div>
                 <FaArrowCircleLeft style={{ cursor: "pointer" }} onClick={decrement} size={30} />

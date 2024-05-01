@@ -1,19 +1,43 @@
 USER ONLY /-
-register ✅ with profile image
+
+register 
+    > with profile image ✅
+
 login ✅
-home page ✅
+    > current user data stores with redux toolkit ✅
+
+home page 
+    > search ✅
+    > category wise filter ✅
+    > pagination 
+    > reset filters ✅
+
+product description 
+    > handling images 
+    > reviews ✅
+        > user review edit and delete feature ✅
+    > add to cart option with quantity feature ✅
+
 cart ✅
+    > delete option on added products ✅
+
 place order 
 payment interagtion and validation 
 my order 
-logout 
+protected routes ✅
+
+logout ✅
 
 
 ADMIN ONLY /-
-allusers 
-allproducts
-charts - male/female , categories 
-allorders 
-updateProduct 
+allusers ✅
+allproducts ✅
+charts - male/female , categories  ✅
+allorders ✅
+CRUD product  
 updateUser to Admin 
 orderStatus Updation 
+
+BACKEND OPTIMISATION 
+
+CACHING DATA 

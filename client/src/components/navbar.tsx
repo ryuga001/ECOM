@@ -2,7 +2,9 @@ import { useState } from "react";
 import { CgShoppingCart } from "react-icons/cg";
 import { RiLoginBoxFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../store/hook";
+import { useAppDispatch, useAppSelector } from "../store/hook";
+import axios from "axios";
+import { setUser } from "../store/userSlice";
 
 
 
@@ -11,6 +13,19 @@ const NavBar = () => {
     const cartProducts = useAppSelector((state) => state.cart.cartProduct);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const user = useAppSelector((state) => state.user.user);
+    const dispatch = useAppDispatch();
+    const handleLogout = async () => {
+        const res = await axios.get("http://localhost:5000/api/v1/user/logout");
+        if (res.data.success) {
+            dispatch(setUser({
+                id: "",
+                username: "",
+                email: "",
+                profileImage: "",
+                role: "",
+            }))
+        }
+    }
     return (
         <>
             <nav className="NavBarContainer">
@@ -30,7 +45,7 @@ const NavBar = () => {
 
                                 <ul>
                                     <li><Link to="/myorders">MyOrders</Link></li>
-                                    <li>Logout</li>
+                                    <li onClick={() => handleLogout()}>Logout</li>
                                 </ul>
 
                             </dialog>

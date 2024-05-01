@@ -32,7 +32,7 @@
      >form {
          @include flex(column);
          width: 30vw;
-         height: 50vh;
+         min-height: 60vh;
          background-color: $color2;
          border-radius: 1rem;
 
@@ -52,6 +52,13 @@
                  background-color: $color2;
                  color: white;
                  border-bottom: 1px solid gray;
+             }
+
+             >select {
+                 border: none;
+                 background-color: $color3;
+                 border-radius: 1rem;
+                 padding-left: .5rem;
              }
 
          }
@@ -341,10 +348,12 @@
 
  .SliderContainer {
      @include flex(column);
+     padding-top: 3rem;
 
      >img {
-         height: 60vh;
+         height: 50vh;
          object-fit: fill;
+         width: 30vw;
      }
 
      >div {
@@ -778,4 +787,260 @@
          }
      }
 
+ }
+
+ .UserProfileImageOption {
+
+     padding-left: 4rem;
+
+     .personal-image {
+         text-align: center;
+     }
+
+     .personal-image input[type="file"] {
+         display: none;
+     }
+
+     .personal-figure {
+         position: relative;
+         width: 120px;
+         height: 120px;
+     }
+
+     .personal-avatar {
+         cursor: pointer;
+         width: 120px;
+         height: 120px;
+         box-sizing: border-box;
+         border-radius: 100%;
+         border: 2px solid transparent;
+         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+         transition: all ease-in-out 0.3s;
+     }
+
+     .personal-avatar:hover {
+         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+     }
+
+     .personal-figcaption {
+         cursor: pointer;
+         position: absolute;
+         top: 0px;
+         width: inherit;
+         height: inherit;
+         border-radius: 100%;
+         opacity: 0;
+         background-color: rgba(0, 0, 0, 0);
+         transition: all ease-in-out 0.3s;
+     }
+
+     .personal-figcaption:hover {
+         opacity: 1;
+         background-color: rgba(0, 0, 0, 0.5);
+     }
+
+     .personal-figcaption>img {
+         margin-top: 32.5px;
+         width: 50px;
+         height: 50px;
+     }
+
+ }
+
+ //  .table-container {
+ //      max-width: 70vw; // Adjust as needed
+ //      margin: 0 auto;
+
+ //      table {
+ //          width: 100%;
+ //          border-collapse: collapse;
+
+ //          th,
+ //          td {
+ //              border: 1px solid #ccc;
+ //              padding: 8px;
+ //              text-align: center;
+ //          }
+
+ //          th {
+ //              background-color: #f2f2f2;
+ //          }
+
+ //          tr:nth-child(even) {
+ //              background-color: #f2f2f2;
+ //          }
+
+ //          tr:hover {
+ //              background-color: #ddd;
+ //          }
+ //      }
+ //  }
+
+
+
+
+ //ADMIN STYLES////////////////////////////////////////////////////////////////////////////////
+ /// 
+
+
+ .AdminContainer {
+     background-color: $color1;
+     margin: 1rem;
+     padding: 2rem;
+     border-radius: 1rem;
+     min-height: 95vh;
+     width: 97vw;
+     @include grid(1fr 5fr);
+
+     >aside {
+         background-color: $color4;
+         padding-top: 2rem;
+         padding-left: 2rem;
+         border-radius: .5rem;
+         @include flex(column, flex-start, flex-start, 2rem);
+
+         img {
+             height: 5rem;
+             width: 5rem;
+             border-radius: 1rem;
+         }
+
+         >li {
+             background-color: rgb(178, 198, 211);
+             padding: .4rem;
+             width: 90%;
+             border-radius: .5rem;
+             font-size: large;
+             //  color: white;
+             cursor: pointer;
+             @include flex(row, flex-start);
+
+             &:hover {
+                 background-color: $color3;
+                 scale: 1.1;
+                 transition-duration: 200ms;
+             }
+
+         }
+     }
+
+     >main {
+         background-color: $color5;
+         border-radius: .5rem;
+         min-height: 100vh;
+
+         >h2 {
+             padding-bottom: 1rem;
+         }
+
+         //  @include flex(column);
+         padding: 2rem;
+     }
+ }
+
+ .TableStyle {
+     //  width: 100%;
+
+     //  >thead {}
+
+     //  >tbody {
+     //      >tr {
+     //          >td {
+
+     //          }
+     //      }
+     //  }
+     //  height: fit-content;
+     width: 70vw;
+     border-collapse: collapse;
+     border-spacing: 0;
+     margin-bottom: 20px;
+
+
+     >tfoot {
+
+         >div {
+             position: absolute;
+             //  background-color: $color5;
+             width: 70vw;
+             @include flex();
+             padding: 2rem;
+
+             >button {
+                 height: 2rem;
+                 width: 2rem;
+                 border-radius: 50%;
+                 border: none;
+                 cursor: pointer;
+
+                 &:hover {
+                     scale: 1.05;
+                 }
+
+
+             }
+         }
+     }
+ }
+
+ th,
+ td {
+     >img {
+         width: 5rem;
+         height: 5rem;
+     }
+
+     padding: 10px;
+     text-align: left;
+     border-bottom: 1px solid #ddd;
+ }
+
+ th {
+     background-color: #f2f2f2;
+ }
+
+
+ @media screen and (max-width: 600px) {
+
+     /* Make table responsive */
+     table {
+         overflow-x: auto;
+     }
+
+ }
+
+
+ .cardsContainer {
+     @include grid(1fr 1fr 1fr);
+ }
+
+
+
+ .CardContainer {
+     border-radius: 8px;
+     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+     background-color: #ffffff;
+     padding: 20px;
+     transition: all 0.3s ease;
+
+     &:hover {
+         transform: translateY(-5px);
+         box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+     }
+
+     height: 10rem;
+     width: 20rem;
+     border-radius: 1rem;
+     font-size: larger;
+     background-color: $color3;
+     //  cursor: pointer;
+     @include flex(column);
+ }
+
+
+ //chats styles
+ .PieChartContainer {
+     height: 50vh;
+     @include flex();
+     margin: 3rem;
  }
