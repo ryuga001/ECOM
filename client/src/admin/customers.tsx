@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import SideBar from './components/sidebar'
 import axios from 'axios';
+import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
 
 interface UserType {
     id: string,
@@ -83,9 +84,22 @@ const AdminCustomer = () => {
                     </tbody>
                     <tfoot>
 
-                        <div>
-                            {renderPageButtons()}
-                        </div>
+                        {totalPages > 1 && <div className='PaginationBox'>
+                            <button onClick={() => {
+                                if (currentPage > 0) {
+                                    setCurrentPage(currentPage - 1);
+                                }
+                            }} disabled={currentPage === 0}><HiArrowLeft /></button>
+                            {/* {CurrentPage > 2 && "..."} */}
+                            {/* <button >{CurrentPage}</button> */}
+                            {/* {CurrentPage < totalPages - 2 && "..."} */}
+                            <button onClick={() => {
+                                if (currentPage < totalPages - 1) {
+                                    setCurrentPage(currentPage + 1);
+                                }
+                            }} disabled={currentPage === totalPages - 1}><HiArrowRight /></button>
+                        </div>}
+
                     </tfoot>
 
                 </table>

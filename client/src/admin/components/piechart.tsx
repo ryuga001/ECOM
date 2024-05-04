@@ -28,7 +28,7 @@ const PieChart = ({ Male, Female }: PropsType) => {
         ],
     };
     return (
-        <div className="PieChartContainer"> <Pie options={options} data={pieChartData} /></div>
+        <div className="ChartContainer"> <Pie options={options} data={pieChartData} /></div>
     )
 }
 

@@ -68,7 +68,7 @@ export interface shippingInfoType {
     state: string,
     country: string,
     pinCode: string,
-    phoneNo: number,
+    phoneNo: number | string,
 }
 
 export interface orderItemsObjectType {

@@ -24,13 +24,14 @@ const NavBar = () => {
                 profileImage: "",
                 role: "",
             }))
+            navigate("/login")
         }
     }
     return (
         <>
             <nav className="NavBarContainer">
                 <div>
-                    <h2 style={{ cursor: "pointer" }} onClick={() => navigate("/")}>{user.username ? user.username : "Ecommerce"}</h2>
+                    <h2 style={{ cursor: "pointer" }} onClick={() => navigate("/")}>ECOM</h2>
                 </div>
 
                 <div >
@@ -39,12 +40,12 @@ const NavBar = () => {
                         cartProducts.length > 0 && <span>{cartProducts.length}</span>
                     }
                     <div>
-                        {user.profileImage ? <img onClick={() => setIsOpen(!isOpen)} src={user.profileImage} style={{ height: "5rem", width: "5rem", cursor: "pointer" }} /> : <RiLoginBoxFill size={35} onClick={() => navigate("/login")} style={{ cursor: "pointer" }} />}
+                        {user.profileImage ? <img onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)} src={user.profileImage} style={{ height: "3rem", width: "3rem", cursor: "pointer", borderRadius: "1rem" }} /> : <RiLoginBoxFill size={35} onClick={() => navigate("/login")} style={{ cursor: "pointer" }} />}
                         <div>
-                            <dialog open={isOpen}>
+                            <dialog onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)} open={isOpen}>
 
                                 <ul>
-                                    <li><Link to="/myorders">MyOrders</Link></li>
+                                    {user.role === "admin" ? <li><Link to="/admin">Dashboard</Link></li> : <li><Link to="/myorders">MyOrders</Link></li>}
                                     <li onClick={() => handleLogout()}>Logout</li>
                                 </ul>
 

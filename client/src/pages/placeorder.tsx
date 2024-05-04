@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/navbar";
 import { useAppSelector } from "../store/hook";
+import axios from "axios";
 
 interface OrderItemType {
     name: string,
     price: number,
     quantity: number,
-    imageUrl: string,
+    image: string,
     product: string,
     _id?: string,
 }
@@ -32,6 +33,7 @@ interface shippingDataType {
 }
 
 const PlaceOrder = () => {
+    const user = useAppSelector((state) => state.user.user);
     const [shippingFormData, setShippingFormData] = useState<shippingDataType>({
         address: "",
         city: "",
@@ -40,10 +42,10 @@ const PlaceOrder = () => {
         pinCode: "",
         phoneNo: "",
         orderedItems: [],
-        user: "userid",
+        user: user.id,
         paymentInfo: {
-            id: "",
-            status: "notpaid",
+            id: "16546161",
+            status: "paid",
         },
         itemsPrice: 0,
         taxPrice: 0,
@@ -69,7 +71,7 @@ const PlaceOrder = () => {
                 name: item.name,
                 price: item.price,
                 quantity: item.quantity,
-                imageUrl: item.imgUrl,
+                image: item.imgUrl,
                 product: item.id,
             })
             totalPrice += (item.price) * (item.quantity);
@@ -84,45 +86,31 @@ const PlaceOrder = () => {
             orderStatus: ("Processing"),
         }))
     }, [])
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(shippingFormData);
+        // console.log(shippingFormData);
+        const res = await axios.post("http://localhost:5000/api/v1/order/new", {
+            shippingInfo: {
+                address: shippingFormData.address,
+                city: shippingFormData.city,
+                state: shippingFormData.state,
+                country: shippingFormData.country,
+                pinCode: shippingFormData.pinCode,
+                phoneNo: shippingFormData.phoneNo
+            },
+            orderItems: shippingFormData.orderedItems,
+            paymentInfo: shippingFormData.paymentInfo,
+            itemsPrice: shippingFormData.itemsPrice,
+            taxPrice: shippingFormData.taxPrice,
+            shippingPrice: shippingFormData.shippingPrice,
+            totalPrice: shippingFormData.totalPrice
+        });
     }
     return (
         <>
             {/* <FaHome style={{ cursor: "pointer", margin: "1rem", }} size={25} /> */}
             <NavBar />
             <div className='PlaceOrderContainer'>
-                <aside>
-                    <h2>Shipping Details</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor='address'>Address</label>
-                            <input name="address" onChange={handleChange} id="address" value={shippingFormData.address}></input>
-                        </div>
-                        <div>
-                            <label htmlFor='city'>City</label>
-                            <input name="city" onChange={handleChange} id="city" value={shippingFormData.city}></input>
-                        </div>
-                        <div>
-                            <label htmlFor='state'>State</label>
-                            <input name="state" onChange={handleChange} id="state" value={shippingFormData.state}></input>
-                        </div>
-                        <div>
-                            <label htmlFor='country'>Country</label>
-                            <input name="country" onChange={handleChange} id="country" value={shippingFormData.country}></input>
-                        </div>
-                        <div>
-                            <label htmlFor='pinCode'>Pin Code</label>
-                            <input name="pinCode" onChange={handleChange} id="pinCode" value={shippingFormData.pinCode}></input>
-                        </div>
-                        <div>
-                            <label htmlFor='phoneNo'>Phone No.</label>
-                            <input name="phoneNo" onChange={handleChange} id="phoneNo" value={shippingFormData.phoneNo}></input>
-                        </div>
-                        <button type="submit">PAY</button>
-                    </form>
-                </aside>
                 <main>
                     <h2>Order Details</h2>
                     <table>
@@ -199,6 +187,36 @@ const PlaceOrder = () => {
 
                     </table>
                 </main>
+                <aside>
+                    <h2>Shipping Details</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor='address'>Address</label>
+                            <input name="address" onChange={handleChange} id="address" value={shippingFormData.address}></input>
+                        </div>
+                        <div>
+                            <label htmlFor='city'>City</label>
+                            <input name="city" onChange={handleChange} id="city" value={shippingFormData.city}></input>
+                        </div>
+                        <div>
+                            <label htmlFor='state'>State</label>
+                            <input name="state" onChange={handleChange} id="state" value={shippingFormData.state}></input>
+                        </div>
+                        <div>
+                            <label htmlFor='country'>Country</label>
+                            <input name="country" onChange={handleChange} id="country" value={shippingFormData.country}></input>
+                        </div>
+                        <div>
+                            <label htmlFor='pinCode'>Pin Code</label>
+                            <input name="pinCode" onChange={handleChange} id="pinCode" value={shippingFormData.pinCode}></input>
+                        </div>
+                        <div>
+                            <label htmlFor='phoneNo'>Phone No.</label>
+                            <input name="phoneNo" onChange={handleChange} id="phoneNo" value={shippingFormData.phoneNo}></input>
+                        </div>
+                        <button type="submit">PAY</button>
+                    </form>
+                </aside>
             </div >
         </>
     )

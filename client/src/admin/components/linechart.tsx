@@ -52,7 +52,7 @@ const LineChart = ({ MonthData }: PropsType) => {
     };
     const options = {};
     return (
-        <div>
+        <div className="ChartContainer">
             <Line options={options} data={LineChartData} />
         </div>
     )

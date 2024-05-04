@@ -16,10 +16,10 @@ const ProductCard = ({ pid, name, imgUrl, price, ratings }: ProductPropsType) =>
             <div>
                 <h3>{name}</h3>
 
-            </div>
-            <div>
-                <span>₹{price}</span>
-                {ratings > 1 && <span>{ratings}⭐</span>}
+                <div>
+                    <span>₹{price}</span>
+                    {ratings > 1 && <span>{ratings}⭐</span>}
+                </div>
             </div>
         </div>
     )

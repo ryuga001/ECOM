@@ -40,13 +40,38 @@ app.use("/api/v1", AnalyticsRoute)
 // connection to database 
 connectDB(mongoURI);
 
-// error middleware s
+// error middleware 
 app.use(errorMiddleware);
 
 // server 
 app.listen(PORT, () => {
     console.log("Server is running at " + `${PORT}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // // Import necessary modules
 // import { faker } from "@faker-js/faker";
 // import Product from "./models/product.js";

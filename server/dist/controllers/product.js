@@ -41,30 +41,35 @@ export const getAdminProducts = TryCatch(async (req, res, next) => {
 // user
 export const getAllProducts = TryCatch(async (req, res, next) => {
     const features = new ApiFeatures(Product.find(), req.query).search().filter().pagination();
+    const filterCount = new ApiFeatures(Product.find(), req.query).search().filter();
     const resultPerPage = 8;
     const productsCount = await Product.countDocuments();
     let products = await features.query;
+    let filteredProducts = await filterCount.query;
     let filteredProductsCount = products.length;
     return res.status(200).json({
         success: true,
         data: products,
         productsCount,
         filteredProductsCount,
-        resultPerPage
+        resultPerPage,
+        filteredCount: filteredProducts.length
     });
 });
-// export const getAllCategories = TryCatch(
-//     async (req: Request, res: Response, next: NextFunction) => {
-//         const product = await Product.find({});
-//         let category = product.map((item: any) => (item.category
-//         ))
-//         category = Array.from(new Set(category));
-//         return res.status(200).json({
-//             success: true,
-//             data: category,
-//         })
-//     }
-// )
+export const getAllCategories = TryCatch(async (req, res, next) => {
+    const product = await Product.find({});
+    if (product.length === 0) {
+        return next(new ErrorHandler("PRODUCTS IS EMPTY", 404));
+    }
+    const category = new Set();
+    product.forEach((item) => {
+        category.add(item.category);
+    });
+    return res.status(200).json({
+        success: true,
+        data: Array.from(category),
+    });
+});
 export const getProductDetails = TryCatch(async (req, res, next) => {
     const product = await Product.findById(req.params.id);
     if (!product)
@@ -145,6 +150,13 @@ export const deleteReview = TryCatch(async (req, res, next) => {
         runValidators: true,
         useFindAndModify: false,
     });
+    return res.status(200).json({
+        success: true,
+    });
+});
+export const deleteProduct = TryCatch(async (req, res, next) => {
+    const id = req.params.id;
+    await Product.deleteOne({ _id: id });
     return res.status(200).json({
         success: true,
     });

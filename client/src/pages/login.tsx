@@ -14,7 +14,7 @@ interface FormDataType {
 
 const Login = () => {
     const dispatch = useAppDispatch();
-    const [login, setLogin] = useState<boolean>(false);
+    const [login, setLogin] = useState<boolean>(true);
     const [ImgUrl, setImgUrl] = useState<string>("../src/assets/defaultProfileImage.png");
     const [formData, setFormData] = useState<FormDataType>({
         username: "",

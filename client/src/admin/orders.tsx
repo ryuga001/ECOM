@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import SideBar from './components/sidebar';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
+import SideBar from './components/sidebar';
 
 const AdminOrder = () => {
     const [orders, setOrders] = useState<Array<any>>([]);
@@ -58,9 +59,21 @@ const AdminOrder = () => {
                         }
                     </tbody>
                     <tfoot>
-                        <div>
-                            {renderPageButtons()}
-                        </div>
+                        {totalPages > 1 && <div className='PaginationBox'>
+                            <button onClick={() => {
+                                if (currentPage > 0) {
+                                    setCurrentPage(currentPage - 1);
+                                }
+                            }} disabled={currentPage === 0}><HiArrowLeft /></button>
+                            {/* {CurrentPage > 2 && "..."} */}
+                            {/* <button >{CurrentPage}</button> */}
+                            {/* {CurrentPage < totalPages - 2 && "..."} */}
+                            <button onClick={() => {
+                                if (currentPage < totalPages - 1) {
+                                    setCurrentPage(currentPage + 1);
+                                }
+                            }} disabled={currentPage === totalPages - 1}><HiArrowRight /></button>
+                        </div>}
                     </tfoot>
                 </table>
             </main>

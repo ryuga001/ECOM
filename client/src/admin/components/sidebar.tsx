@@ -1,4 +1,4 @@
-import { FaSignOutAlt, FaUser } from "react-icons/fa"
+import { FaHome, FaSignOutAlt, FaUser } from "react-icons/fa"
 import { HiClipboardList } from "react-icons/hi"
 import { IoBag } from "react-icons/io5"
 import { MdDashboard } from "react-icons/md"
@@ -31,6 +31,7 @@ const SideBar = () => {
             <li onClick={() => navigate("/admin-customer")}><FaUser /> Customers</li>
             <li onClick={() => navigate("/admin-product")}><IoBag /> Products</li>
             <li onClick={() => navigate("/admin-order")}> <HiClipboardList /> Orders</li>
+            <li onClick={() => navigate("/")}> <FaHome /> Home</li>
             <li onClick={() => handleLogout()}><FaSignOutAlt /> Logout</li>
         </>
     )

@@ -83,6 +83,8 @@
              }
          }
      }
+
+     @media screen and (max-width : 900px) {}
  }
 
  .NavBarContainer {
@@ -150,6 +152,8 @@
              }
          }
      }
+
+     position: relative;
  }
 
  .sideBarContainer {
@@ -312,6 +316,47 @@
          >div {
              @include grid(1fr 1fr 1fr 1fr, 1rem);
          }
+
+         .PaginationBox {
+             //  width: 60%;
+             @include flex(row, space-between, center);
+
+             >button {
+                 height: 2rem;
+                 width: 2.5rem;
+                 border: none;
+                 border-radius: .5rem;
+                 cursor: pointer;
+                 font-size: medium;
+
+             }
+         }
+     }
+
+     @media screen and (max-width : 1190px) {
+         @include flex(column);
+
+         >aside {
+             width: 100%;
+
+             >div {
+                 >div {
+                     >ul {
+                         max-height: 20vh;
+                     }
+                 }
+             }
+         }
+
+         >main {
+             width: 100%;
+
+             >div {
+                 //  @include grid(1fr 1fr 1fr, 1rem);
+                 @include flex(column);
+             }
+
+         }
      }
  }
 
@@ -336,12 +381,27 @@
      }
 
      >div {
-         @include flex(column, center, center, 0);
+         @include flex(column, center, center, 1rem);
 
-         //  background-color: $;
-         >p {
-             font-weight: 400;
-             color: whitesmoke;
+         >div {
+             @include flex(column, center, center, 1rem);
+
+             //  background-color: $;
+             >p {
+                 font-weight: 400;
+                 color: whitesmoke;
+             }
+         }
+
+     }
+
+     @media screen and (max-width : 1190px) {
+         width: 70vw;
+         height: max-content;
+         @include flex(row, flex-start);
+
+         >img {
+             width: 50%;
          }
      }
  }
@@ -368,6 +428,11 @@
          }
      }
 
+     @media screen and (max-width : 900px) {
+         >img {
+             width: 80%;
+         }
+     }
  }
 
  .ProductDescriptionContainer {
@@ -418,14 +483,36 @@
              }
          }
      }
+
+     @media screen and (max-width : 900px) {
+         @include flex(column);
+         //  height: 80%;
+
+         //  position: relative;
+         //  display: block;
+         //  position: absolute;
+         >main {
+             @include flex(column);
+
+             >div {
+                 padding: 1rem;
+                 width: 90%;
+                 //  min-height: 30vh;
+                 height: max-content;
+                 //  max-height: max-content;
+                 overflow-x: scroll;
+             }
+         }
+     }
  }
 
  .ReviewContainer {
      background-color: $color1;
+     padding-bottom: 2rem;
      @include flex(column);
 
      >div {
-         min-height: 30vh;
+         min-height: 10vh;
          width: 83vw;
          background-color: $color5;
          padding: 1rem;
@@ -456,10 +543,20 @@
              }
          }
      }
+
+     @media screen and (max-width : 900px) {
+         position: relative;
+         padding-top: 1rem;
+
+         >div {
+             width: 90%;
+         }
+     }
  }
 
  .CreateReviewBox {
      form {
+
          padding: 1rem;
 
          @include flex(row, center, center, .3rem);
@@ -490,6 +587,8 @@
              padding: .2rem;
          }
      }
+
+
  }
 
  .CartContainer {
@@ -593,6 +692,14 @@
              }
          }
      }
+
+     //  @media screen and (max-width : 500px) {
+     //      width: 100%;
+     //      @include flex(column);
+     //      height: 100%;
+
+
+     //  }
  }
 
 
@@ -638,7 +745,8 @@
              }
 
              >button {
-                 width: 10vw;
+                 width: max-content;
+                 padding: .5rem;
                  height: 5vh;
                  border: none;
                  border-radius: .5rem;
@@ -729,6 +837,26 @@
 
          }
      }
+
+     @media screen and (max-width : 850px) {
+
+         width: 100vw;
+         min-height: 100vh;
+         @include flex(column);
+         //  overflow: scroll;
+
+         >main {
+             @include flex(column);
+             width: 100%;
+
+             >table {
+                 width: max-content;
+                 display: block;
+                 width: 80%;
+                 //  margin: 1rem;
+             }
+         }
+     }
  }
 
 
@@ -738,34 +866,55 @@
      min-height: 100vh;
 
      >main {
-
+         @include flex(column);
 
          >h2 {
              @include flex();
              padding: 2rem;
          }
 
+
          >table {
-             @include flex();
+             background-color: whitesmoke;
+             //  min-height: 50vh;
+         }
 
-             >tbody {
-                 @include flex(column);
-                 width: 60vw;
-                 min-height: 30vh;
-                 padding: 3rem;
-                 background-color: $color5;
-                 border-radius: 1rem;
-                 //  overflow: scroll;
+         //  >table {
+         //      @include flex();
 
-                 //  &::-webkit-scrollbar {
-                 //      display: hidden;
-                 //  }
+         //      >tbody {
+         //          @include flex(column);
+         //          width: 60vw;
+         //          min-height: 30vh;
+         //          padding: 3rem;
+         //          background-color: $color5;
+         //          border-radius: 1rem;
+         //          //  overflow: scroll;
 
-                 >tr {
-                     @include grid(1fr 1fr 1fr, 12rem);
+         //          //  &::-webkit-scrollbar {
+         //          //      display: hidden;
+         //          //  }
+
+         //          >tr {
+         //              @include grid(1fr 1fr 1fr, 12rem);
 
 
-                 }
+         //          }
+         //      }
+         //  }
+     }
+
+     @media screen and (max-width : 500px) {
+         width: 100%;
+
+         //  height: max-content;
+         >main {
+
+
+             >table {
+                 //  padding: 1rem;
+                 overflow: scroll;
+                 display: block;
              }
          }
      }
@@ -879,8 +1028,7 @@
 
 
 
- //ADMIN STYLES////////////////////////////////////////////////////////////////////////////////
- /// 
+
 
 
  .AdminContainer {
@@ -888,8 +1036,9 @@
      margin: 1rem;
      padding: 2rem;
      border-radius: 1rem;
-     min-height: 95vh;
-     width: 97vw;
+     min-height: 100vh;
+     width: 98%;
+     overflow: scroll;
      @include grid(1fr 5fr);
 
      >aside {
@@ -935,6 +1084,18 @@
 
          //  @include flex(column);
          padding: 2rem;
+     }
+
+     @media screen and (max-width : 1200px) {
+         @include flex(column);
+         overflow: scroll;
+
+         >aside {
+             overflow: scroll;
+             width: 100%;
+             padding: 1rem;
+             @include flex(row, flex-start);
+         }
      }
  }
 
@@ -1011,7 +1172,17 @@
 
 
  .cardsContainer {
+     //  width: 60%;
      @include grid(1fr 1fr 1fr);
+
+     @media screen and (max-width : 2500px) {
+         @include flex(row, flex-start);
+     }
+
+     @media screen and (max-width : 400px) {
+         @include flex(column, );
+
+     }
  }
 
 
@@ -1029,18 +1200,181 @@
      }
 
      height: 10rem;
-     width: 20rem;
+     width: 22vw;
      border-radius: 1rem;
      font-size: larger;
      background-color: $color3;
      //  cursor: pointer;
      @include flex(column);
+
+     @media screen and (max-width : 400px) {
+         width: 100%;
+
+     }
  }
 
 
  //chats styles
- .PieChartContainer {
+ .ChartContainer {
      height: 50vh;
+
+     width: 60vw;
      @include flex();
      margin: 3rem;
+
+     @media screen and (max-width : 1200px) {
+         align-items: flex-start;
+     }
+
+     @media screen and (max-width : 400px) {
+         width: 60%;
+
+     }
+ }
+
+
+
+ .form-container {
+     max-width: 500px;
+     margin: 0 auto;
+     padding: 20px;
+     border: 1px solid #ccc;
+     border-radius: 5px;
+
+     h2 {
+         text-align: center;
+         margin-bottom: 20px;
+     }
+
+     .form-group {
+         margin-bottom: 20px;
+
+         label {
+             display: block;
+             font-weight: bold;
+             margin-bottom: 5px;
+         }
+
+         input[type='text'],
+         input[type='number'],
+         input[type='file'] {
+             width: 100%;
+             padding: 10px;
+             font-size: 16px;
+             border: 1px solid #ccc;
+             border-radius: 5px;
+         }
+     }
+
+     button {
+         display: block;
+         width: 100%;
+         padding: 10px;
+         background-color: #007bff;
+         color: #fff;
+         border: none;
+         border-radius: 5px;
+         font-size: 16px;
+         cursor: pointer;
+         transition: background-color 0.3s;
+
+         &:hover {
+             background-color: #0056b3;
+         }
+     }
+ }
+
+
+ .bannerContainer {
+     margin-top: 5rem;
+
+     .image-banner {
+         position: relative;
+         width: 100%;
+         height: 300px;
+
+     }
+
+     .image {
+         width: 100%;
+         height: 100%;
+         background-size: cover;
+         background-position: center;
+         position: relative;
+
+         >img {
+             //  margin-top: 5rem;
+             width: 90vw;
+         }
+     }
+
+     .overlay {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background-color: rgba(0, 0, 0, 0.5);
+
+     }
+
+     .content {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         text-align: center;
+         color: #fff;
+         z-index: 1;
+     }
+
+     h2 {
+         font-size: 36px;
+         margin-bottom: 20px;
+     }
+
+     p {
+         font-size: 18px;
+         margin-bottom: 30px;
+     }
+
+     .button {
+         display: inline-block;
+         background-color: #007bff;
+         color: #fff;
+         padding: 12px 30px;
+         font-size: 16px;
+         text-decoration: none;
+         border-radius: 5px;
+         transition: background-color 0.3s;
+     }
+
+     .button:hover {
+         background-color: #0056b3;
+     }
+
+
+     @media screen and (max-width: 768px) {
+         .image-banner {
+             height: 200px;
+
+         }
+
+         h2 {
+             font-size: 28px;
+
+         }
+
+         p {
+             font-size: 16px;
+
+         }
+
+         .button {
+             padding: 10px 20px;
+
+         }
+
+     }
+
  }

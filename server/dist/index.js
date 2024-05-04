@@ -36,7 +36,7 @@ app.use("/api/v1/order", OrderRoutes);
 app.use("/api/v1", AnalyticsRoute);
 // connection to database 
 connectDB(mongoURI);
-// error middleware s
+// error middleware 
 app.use(errorMiddleware);
 // server 
 app.listen(PORT, () => {

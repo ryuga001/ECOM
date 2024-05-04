@@ -41,7 +41,7 @@ const BarChart = ({ Categories, CategoriesData }: PropsType) => {
     };
     return (
 
-        <div>
+        <div className="ChartContainer">
             <Bar options={options} data={barChartData} />
         </div>
     )
