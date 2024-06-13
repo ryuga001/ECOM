@@ -9,26 +9,58 @@ interface PropsType {
     Female?: number,
 }
 
-const PieChart = ({ Male, Female }: PropsType) => {
+const PieChart = ({ Male = 0, Female = 0 }: PropsType) => {
     const options = {
-
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top' as const,
+                labels: {
+                    font: {
+                        size: 14,
+                    },
+                    color: '#333',
+                },
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                titleFont: {
+                    size: 16,
+                },
+                bodyFont: {
+                    size: 14,
+                },
+                footerFont: {
+                    size: 12,
+                },
+            },
+        },
     };
+
     const pieChartData = {
-        labels: ["Male", "Female"],
+        labels: ['Male', 'Female'],
         datasets: [
             {
-                label: "Count",
+                label: 'Count',
                 data: [Male, Female],
                 backgroundColor: [
-                    "red",
-                    "blue",
+                    'rgba(54, 162, 235, 0.6)', // Male: Blue
+                    'rgba(255, 99, 132, 0.6)', // Female: Red
                 ],
-                hoverOffset: 4,
+                borderColor: [
+                    'rgba(54, 162, 235, 1)', // Male: Blue
+                    'rgba(255, 99, 132, 1)', // Female: Red
+                ],
+                borderWidth: 1,
+                hoverBackgroundColor: [
+                    'rgba(54, 162, 235, 0.8)', // Male: Darker Blue
+                    'rgba(255, 99, 132, 0.8)', // Female: Darker Red
+                ],
             },
         ],
     };
     return (
-        <div className="ChartContainer"> <Pie options={options} data={pieChartData} /></div>
+        <div className="Pie-chart-container"> <Pie options={options} data={pieChartData} /></div>
     )
 }
 

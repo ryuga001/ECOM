@@ -14,21 +14,10 @@ interface UserType {
 
 const AdminCustomer = () => {
     const [customer, setCustomer] = useState<Array<any>>([]);
+    // const { customer } = useGetAdminCustomersQuery();
     useEffect(() => {
         const fetchData = async () => {
             const res = await axios.get("http://localhost:5000/api/v1/user/admin/users");
-            // console.log(res.data);
-            // const temp: Array<UserType> = [];
-            // res.data.forEach((item: any) => {
-            //     temp.push({
-            //         id: item._id,
-            //         username: item.username,
-            //         email: item.email,
-            //         avatar: item.avatar,
-            //         role: item.role,
-            //         gender: item.gender,
-            //     })
-            // })
             setCustomer(res.data.data);
         }
         fetchData();
@@ -57,7 +46,17 @@ const AdminCustomer = () => {
                 <td>{item.username}</td>
                 <td>{item.email}</td>
                 <td>{item.gender}</td>
-                <td>{item.role}</td>
+                <td>{item.role === 'user' ? <span style={{
+                    backgroundColor: 'lightgreen',
+                    padding: '6px',
+                    borderRadius: '0.5rem',
+                }}>User</span> : <span
+                    style={{
+                        backgroundColor: 'orange',
+                        padding: '6px',
+                        borderRadius: '0.5rem',
+                    }}
+                >Admin</span>}</td>
             </tr>
         ));
     };
@@ -84,7 +83,7 @@ const AdminCustomer = () => {
                     </tbody>
                     <tfoot>
 
-                        {totalPages > 1 && <div className='PaginationBox'>
+                        {totalPages > 1 && <div className='PaginationBox2'>
                             <button onClick={() => {
                                 if (currentPage > 0) {
                                     setCurrentPage(currentPage - 1);

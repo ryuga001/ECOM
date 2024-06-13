@@ -1,10 +1,10 @@
 import axios from "axios";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CgAdd } from "react-icons/cg";
 import { FaTrash } from "react-icons/fa";
+import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
 import { TiDeleteOutline } from "react-icons/ti";
 import SideBar from "./components/sidebar";
-import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
 interface formDataType {
     name: string,
     description: string,
@@ -12,7 +12,10 @@ interface formDataType {
     category: string,
     price: number,
 }
+
 const AdminProduct = () => {
+
+
     const [product, setProduct] = useState<Array<any>>([]);
     const [modal, setModal] = useState<boolean>(false);
     const fetchData = async () => {
@@ -52,7 +55,13 @@ const AdminProduct = () => {
                 <td><img src={item.images[0].url} /></td>
                 <td>{item.name}</td>
                 <td>{item.category}</td>
-                <td>{item.ratings}⭐</td>
+                <td>
+                    {item.ratings > 0 && <div className="product-ratings">
+                        {Array.from({ length: 5 }, (_, i) => (
+                            <span key={i} className={i < item.ratings ? 'filled-star' : 'empty-star'}>★</span>
+                        ))}
+                    </div>}
+                </td>
                 <td>{item.stock}</td>
                 <td>Rs. {item.price} /-</td>
                 {/* <FaEdit style={{ cursor: "pointer" }} color="blue" onClick={() => handleEdit(item._id)} />   */}
@@ -123,23 +132,19 @@ const AdminProduct = () => {
                                 <th></th>
                             </thead>
                             <tbody>
-                                {
-                                    renderTableData()
-                                }
+                                {renderTableData()}
 
                             </tbody>
                             <tfoot>
 
-                                {/* {renderPageButtons()} */}
-                                {totalPages > 1 && <div className='PaginationBox'>
+
+                                {totalPages > 1 && <div className='PaginationBox2'>
                                     <button onClick={() => {
                                         if (currentPage > 0) {
                                             setCurrentPage(currentPage - 1);
                                         }
                                     }} disabled={currentPage === 0}><HiArrowLeft /></button>
-                                    {/* {CurrentPage > 2 && "..."} */}
-                                    {/* <button >{CurrentPage}</button> */}
-                                    {/* {CurrentPage < totalPages - 2 && "..."} */}
+
                                     <button onClick={() => {
                                         if (currentPage < totalPages - 1) {
                                             setCurrentPage(currentPage + 1);
@@ -149,6 +154,7 @@ const AdminProduct = () => {
 
                             </tfoot>
                         </table>
+
                     </> : <>
                         <div className="form-container">
                             <TiDeleteOutline color="red" size={35} style={{ cursor: "pointer" }} onClick={() => setModal(false)} />

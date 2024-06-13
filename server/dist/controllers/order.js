@@ -36,7 +36,7 @@ export const myOrders = TryCatch(async (req, res, next) => {
     const orders = await Order.find({ user: req.userId });
     return res.status(200).json({
         success: true,
-        orders,
+        data: orders,
     });
 });
 export const getAllOrders = TryCatch(async (req, res, next) => {

@@ -1,7 +1,7 @@
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { config } from "dotenv";
+import dotenv from 'dotenv'
 import express from "express";
 import { errorMiddleware } from "./middleware/error.js";
 import AnalyticsRoute from "./routes/analytics.js";
@@ -10,9 +10,7 @@ import ProductRoutes from "./routes/products.js";
 import UserRoutes from "./routes/user.js";
 import { connectDB } from "./utils/feature.js";
 
-config({
-    path: "./.env",
-})
+dotenv.config()
 
 // env constants 
 const PORT = process.env.PORT || 8000;
@@ -27,11 +25,7 @@ app.use(cors({
 app.use(cookieParser())
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-//     res.header("Access-Control-Allow-Credentials", true);
-//     next();
-// });
+
 // api routes 
 app.use("/api/v1/user", UserRoutes);
 app.use("/api/v1/product", ProductRoutes);

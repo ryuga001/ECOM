@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom"
 import { setUser } from "../../store/userSlice"
 import axios from "axios"
 import { useAppDispatch, useAppSelector } from "../../store/hook"
+import { useState } from "react"
+import { FaSliders } from "react-icons/fa6"
 
 const SideBar = () => {
     const navigate = useNavigate();
     const user = useAppSelector((state) => state.user.user);
+    const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const handleLogout = async () => {
         const res = await axios.get("http://localhost:5000/api/v1/user/logout");
@@ -24,15 +27,19 @@ const SideBar = () => {
             navigate("/login");
         }
     }
+    const myStyle = {
+        width: (!drawerOpen ? "100%" : "fit-content")
+    }
     return (
         <>
-            <li><img src={user.profileImage} /> {(user.username).toUpperCase()}</li>
-            <li onClick={() => navigate("/admin")}><MdDashboard /> Dashboard</li>
-            <li onClick={() => navigate("/admin-customer")}><FaUser /> Customers</li>
-            <li onClick={() => navigate("/admin-product")}><IoBag /> Products</li>
-            <li onClick={() => navigate("/admin-order")}> <HiClipboardList /> Orders</li>
-            <li onClick={() => navigate("/")}> <FaHome /> Home</li>
-            <li onClick={() => handleLogout()}><FaSignOutAlt /> Logout</li>
+            <li onClick={() => setDrawerOpen(!drawerOpen)} style={myStyle}> <FaSliders />  {!drawerOpen && 'ADMIN'}</li>
+            {/* <li><img src={user.profileImage} /> {!drawerOpen && `${(user.username).toUpperCase()}`}</li> */}
+            <li style={myStyle} onClick={() => navigate("/admin")}><MdDashboard /> {!drawerOpen && "Dashboard"}</li>
+            <li style={myStyle} onClick={() => navigate("/admin-customer")}><FaUser /> {!drawerOpen && "Customers"}</li>
+            <li style={myStyle} onClick={() => navigate("/admin-product")}><IoBag /> {!drawerOpen && "Products"}</li>
+            <li style={myStyle} onClick={() => navigate("/admin-order")}> <HiClipboardList /> {!drawerOpen && "Orders"}</li>
+            <li style={myStyle} onClick={() => navigate("/")}> <FaHome /> {!drawerOpen && "Home"}</li>
+            <li style={myStyle} onClick={() => handleLogout()}><FaSignOutAlt /> {!drawerOpen && "Logout"}</li>
         </>
     )
 }

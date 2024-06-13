@@ -23,7 +23,7 @@ export const createProduct = TryCatch(
         files.forEach(file => {
             images.push({
                 imageId: file.filename,
-                url: file.path
+                url: `../uploads/${file.filename}`
             })
         });
 

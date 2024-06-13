@@ -7,10 +7,6 @@ router.post("/register", singleUpload, registerUser);
 router.post("/login", loginUser);
 router.get("/logout", logout);
 router.get("/me", isAuthenticatedUser, getUserDetails);
-// router.post("/password/forgot", forgotPassword);
-// router.put("/password/reset/:token", resetPassword);
-// router.put("/password/update", isAuthenticatedUser, updatePassword);
-// router.put("/me/update", isAuthenticatedUser, updateProfile);
 // admin routes 
 router
     .route("/admin/users")

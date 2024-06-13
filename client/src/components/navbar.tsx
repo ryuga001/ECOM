@@ -5,8 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hook";
 import axios from "axios";
 import { setUser } from "../store/userSlice";
+import { useLogoutUserQuery } from "../store/api";
 
 
+const BaseUrl = "http://localhost:5000/api/v1";
 
 const NavBar = () => {
     const navigate = useNavigate();
@@ -14,9 +16,18 @@ const NavBar = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const user = useAppSelector((state) => state.user.user);
     const dispatch = useAppDispatch();
-    const handleLogout = async () => {
-        const res = await axios.get("http://localhost:5000/api/v1/user/logout");
-        if (res.data.success) {
+    const [logoutCalled, setLogoutCalled] = useState<boolean>(false);
+
+
+    const logoutUser = useLogoutUserQuery({
+        skip: !logoutCalled
+    });
+
+    const handleLogout = () => {
+        // const res = await axios.get(`${BaseUrl}/user/logout`);
+        // if (res.data.success) {
+        setLogoutCalled(true);
+        if (logoutUser.isSuccess) {
             dispatch(setUser({
                 id: "",
                 username: "",
@@ -27,6 +38,7 @@ const NavBar = () => {
             navigate("/login")
         }
     }
+
     return (
         <>
             <nav className="NavBarContainer">

@@ -3,13 +3,11 @@ import jwt from "jsonwebtoken";
 import { TryCatch } from "../middleware/error.js";
 import User from "../models/user.js";
 import ErrorHandler from "../utils/utility-class.js";
-dotenv.config({
-    path: "./.env"
-});
-const SECRET = "RAHUL";
+dotenv.config();
+const SECRET = process.env.JWT_SECRET || "";
 export const registerUser = TryCatch(async (req, res, next) => {
     const { username, email, password, avatar, role, gender } = req.body;
-    const img = req.file?.path;
+    const img = `../uploads/${req.file?.filename}`;
     const NewUser = await User.create({
         username,
         email,
@@ -26,7 +24,7 @@ export const registerUser = TryCatch(async (req, res, next) => {
 });
 export const loginUser = TryCatch(async (req, res, next) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
     if (!user) {
         return next(new ErrorHandler("Invalid email or password", 401));
     }
@@ -59,7 +57,7 @@ export const logout = TryCatch(async (req, res, next) => {
     });
 });
 export const getUserDetails = TryCatch(async (req, res, next) => {
-    const user = await User.findById(req.userId);
+    const user = await User.findById({ _id: req.userId });
     return res.status(200).json({
         success: true,
         data: user,

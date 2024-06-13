@@ -1,61 +1,38 @@
-
+import React from 'react';
 import {
     Chart as ChartJS,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    CategoryScale,
-    Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-
-ChartJS.register({
     CategoryScale,
     LinearScale,
-    PointElement,
-    LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend,
-});
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+);
 
 interface PropsType {
-    MonthData?: Array<number>
+    categories?: string[];
+    categoriesData?: number[];
 }
 
-const LineChart = ({ MonthData }: PropsType) => {
-    const LineChartData = {
-        labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-        ],
-        datasets: [
-            {
-                label: "Sales",
-                data: MonthData,
-                borderColor: "lightgreen",
-            },
-        ],
-    };
+const HorizontalBarChart = ({ categories = [], categoriesData = [] }: PropsType) => {
     const options = {
+        indexAxis: 'y' as const,
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'top',
+                position: 'top' as const,
                 labels: {
                     font: {
                         size: 14,
@@ -65,16 +42,13 @@ const LineChart = ({ MonthData }: PropsType) => {
             },
             title: {
                 display: true,
-                text: 'Monthly Sales Data',
+                text: 'Inventory',
                 font: {
                     size: 18,
                 },
                 color: '#333',
             },
             tooltip: {
-                enabled: true,
-                mode: 'index',
-                intersect: false,
                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
                 titleFont: {
                     size: 16,
@@ -91,7 +65,7 @@ const LineChart = ({ MonthData }: PropsType) => {
             x: {
                 title: {
                     display: true,
-                    text: 'Month',
+                    // text: 'Values',
                     font: {
                         size: 14,
                     },
@@ -104,7 +78,7 @@ const LineChart = ({ MonthData }: PropsType) => {
             y: {
                 title: {
                     display: true,
-                    text: 'Sales',
+                    text: 'Categories',
                     font: {
                         size: 14,
                     },
@@ -116,11 +90,27 @@ const LineChart = ({ MonthData }: PropsType) => {
             },
         },
     };
-    return (
-        <div className="ChartContainer LineChartContainer">
-            <Line options={options} data={LineChartData} />
-        </div>
-    )
-}
 
-export default LineChart
+    const data = {
+        labels: categories,
+        datasets: [
+            {
+                label: 'Quantity',
+                data: categoriesData,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(75, 192, 192, 0.8)',
+                hoverBorderColor: 'rgba(75, 192, 192, 1)',
+            },
+        ],
+    };
+
+    return (
+        <div className="HorizontalBar-chart-container">
+            <Bar options={options} data={data} />
+        </div>
+    );
+};
+
+export default HorizontalBarChart;

@@ -1,39 +1,18 @@
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoSend } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/navbar';
+import Slider from '../components/slider';
+import { useDeleteReivewMutation, useGetProductQuery, useSendReviewMutation } from '../store/api';
 import { addProduct } from '../store/cartSlice';
 import { useAppDispatch, useAppSelector } from '../store/hook';
-import Slider from '../components/slider';
+import { ProductSingleType, ReviewFormDataType } from '../types/alltypes';
 
-interface ReviewFormDataType {
-    comment: string,
-    rate: string,
-    pid?: string,
-}
 
-interface ImageArrayType {
-    imageId: string,
-    url: string,
-}
-
-interface ProductSingleType {
-    _id: string,
-    name: string,
-    description: string,
-    price: number,
-    ratings: number,
-    images: Array<ImageArrayType>,
-    category: string,
-    stock: number,
-    reviews: Array<any>,
-    numOfReviews: number,
-    user: string,
-}
-
+const BaseUrl = "http://localhost:5000/api/v1";
 
 const ProductDescription = () => {
     const { id } = useParams();
@@ -41,52 +20,20 @@ const ProductDescription = () => {
     const [reviewFormData, setReviewFormData] = useState<ReviewFormDataType>({
         comment: "",
         rate: "5",
-        pid: id?.toString(),
+        pid: id ? id : ""
     })
-    const [product, setProduct] = useState<ProductSingleType>({
-        _id: "",
-        name: "",
-        description: "",
-        price: 0,
-        ratings: 0,
-        images: [],
-        category: "",
-        stock: 0,
-        reviews: [],
-        numOfReviews: 0,
-        user: "",
-    });
-    const fetchProduct = async () => {
-        const res = await axios.get(`http://localhost:5000/api/v1/product/${id}`);
-        if (res.data.success) {
-            console.log(res.data.data);
-            setProduct({
-                _id: res.data.data._id,
-                name: res.data.data.name,
-                description: res.data.data.description,
-                price: res.data.data.price,
-                ratings: res.data.data.ratings,
-                images: res.data.data.images,
-                category: res.data.data.category,
-                stock: res.data.data.stock,
-                reviews: res.data.data.reviews,
-                numOfReviews: res.data.data.numOfReviews,
-                user: res.data.data.user,
-            })
-        }
-    }
-    useEffect(() => {
-        fetchProduct();
-    }, []);
+
+    const { data: fetchProductData, refetch } = useGetProductQuery(id ? id : "");
+    const [sendReview, { isSuccess: reviewSentSuccess }] = useSendReviewMutation()
     const dispatch = useAppDispatch();
     const [itemQuantity, setItemQuantity] = useState<number>(1);
     const AddCart = () => {
         dispatch(addProduct({
-            id: product._id,
-            name: product.name,
+            id: fetchProductData?.data?._id,
+            name: fetchProductData?.data?.name,
             quantity: itemQuantity,
-            imgUrl: product.images[0].url,
-            price: product.price
+            imgUrl: fetchProductData?.data?.images[0].url,
+            price: fetchProductData?.data?.price
         }));
     }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -101,87 +48,125 @@ const ProductDescription = () => {
             alert("You are not logged In 😊");
             return;
         }
-        // console.log(reviewFormData);
-        const res = await axios.put("http://localhost:5000/api/v1/product/review", {
-            rating: reviewFormData.rate,
-            comment: reviewFormData.comment,
-            productId: reviewFormData.pid,
-        });
+        console.log(reviewFormData)
 
-        if (!res.data.success) {
-            console.log("Not Sent Review For ", reviewFormData.pid);
+        sendReview(
+            reviewFormData
+        )
+
+        if (reviewSentSuccess) {
+            console.log("Review Sent Successfully");
+            refetch()
         }
+        // const res = await axios.put(`${BaseUrl}/product/review`, {
+        //     rating: reviewFormData.rate,
+        //     comment: reviewFormData.comment,
+        //     productId: reviewFormData.pid,
+        // });
+
+        // if (!res.data.success) {
+        //     console.log("Not Sent Review For ", reviewFormData.pid);
+        // } else {
+        //     refetch()
+        // }
     }
-    const handleDeleteReivew = async (reviewId: string) => {
-        const res = await axios.delete(`http://localhost:5000/api/v1/product/reviews/${id}/${reviewId}`);
-        if (res.data.success) {
-            // fetchProduct();
-            alert("review deleted");
+    const [deleteReview, { isSuccess: reviewDeletionSuccess }] = useDeleteReivewMutation();
+    const handleDeleteReivew = (reviewId: string) => {
+        // const res = await axios.delete(`${BaseUrl}/product/reviews/${id}/${reviewId}`);
+        // if (res.data.success) {
+        //     refetch()
+        //     alert("review deleted");
+        // }
+        deleteReview({ id, reviewId });
+        if (reviewDeletionSuccess) {
+            refetch()
         }
     }
     return (
         <>
             <NavBar />
+
             <div className="ProductDescriptionContainer">
                 <aside>
-                    <Slider images={product.images} />
+                    <Slider images={fetchProductData?.data?.images ? fetchProductData.data.images : []} />
                 </aside>
                 <main>
-                    <div>
-                        <h2>{product.name}</h2>
-                        <p>{product.description}</p>
-                        <div>
-                            <span>{product.category}</span>
-                            {product.stock == 0 && <span style={{ backgroundColor: "orange" }}>Unavlaible</span>}
-                            {product.ratings > 0 && <span>{product.ratings}⭐</span>}
-                            <span style={{ backgroundColor: "lightgreen" }}>Rs.{product.price}</span>
+                    <div className="product-info">
+                        <h2>{fetchProductData?.data?.name}</h2>
+                        <p>{fetchProductData?.data?.description}</p>
+                        <div className="product-meta">
+                            <span className="category">{fetchProductData?.data?.category}</span>
+                            {fetchProductData?.data?.stock === 0 && <span className="unavailable">Unavailable</span>}
+                            <span className="price">Rs.{fetchProductData?.data?.price}</span>
+                            {fetchProductData?.data?.ratings > 0 && <div className="product-ratings">
+                                {Array.from({ length: 5 }, (_, i) => (
+                                    <span key={i} className={i < fetchProductData?.data?.ratings ? 'filled-star' : 'empty-star'}>★</span>
+                                ))}
+                            </div>}
                         </div>
-                        <div>
-
-                            <button disabled={itemQuantity == 1} onClick={() => setItemQuantity(itemQuantity - 1)} style={{ height: "1rem", width: "1rem", backgroundColor: "blueviolet", border: "none", fontSize: "large", display: "flex", alignItems: "center", justifyContent: "center" }}>-</button>
-                            {itemQuantity}
-                            <button disabled={itemQuantity == product.stock} style={{ height: "1rem", width: "1rem", backgroundColor: "blueviolet", border: "none", fontSize: "large", display: "flex", alignItems: "center", justifyContent: "center" }} onClick={() => setItemQuantity(itemQuantity + 1)}>+</button>
+                        <div className="quantity-controls">
+                            <button
+                                disabled={itemQuantity === 1}
+                                onClick={() => setItemQuantity(itemQuantity - 1)}
+                            >
+                                -
+                            </button>
+                            <span className="quantity">{itemQuantity}</span>
+                            <button
+                                disabled={itemQuantity === fetchProductData?.data?.stock}
+                                onClick={() => setItemQuantity(itemQuantity + 1)}
+                            >
+                                +
+                            </button>
                         </div>
-                        {product.stock > -1 && <button onClick={() => AddCart()}>Add to Cart</button>}
+                        {fetchProductData?.data?.stock > 0 && <button className="add-to-cart" onClick={AddCart}>Add to Cart</button>}
                     </div>
                 </main>
             </div>
             <div className='ReviewContainer'>
                 <div>
-                    <h2>Reivews {product.numOfReviews > 0 ? `(${product.numOfReviews})` : ""}</h2>
+                    <h2>Reviews {fetchProductData?.data?.numOfReviews > 0 ? `(${fetchProductData?.data?.numOfReviews})` : ""}</h2>
                     <div className='CreateReviewBox'>
                         <form onSubmit={handleSubmit}>
-                            <input type='text' name='comment' value={reviewFormData.comment}
-
+                            <input
+                                type='text'
+                                name='comment'
+                                value={reviewFormData.comment}
                                 onChange={(e) => handleChange(e)}
-
-                                placeholder='write a review' />
-                            <select defaultValue={reviewFormData.rate} name='rate' onChange={(e) => handleChange(e)} value={reviewFormData.rate} >
-                                <option value="5" >5⭐</option>
+                                placeholder='Write a review'
+                            />
+                            <select
+                                defaultValue={reviewFormData.rate}
+                                name='rate'
+                                onChange={(e) => handleChange(e)}
+                                value={reviewFormData.rate}
+                            >
+                                <option value="5">5⭐</option>
                                 <option value="4">4⭐</option>
                                 <option value="3">3⭐</option>
                                 <option value="2">2⭐</option>
                                 <option value="1">1⭐</option>
                             </select>
-                            <button><IoSend color='green' size={30} /></button>
+                            <button type='submit'><IoSend color='green' size={30} /></button>
                         </form>
                     </div>
                     <main>
-                        {
-                            product.reviews.map((item) => (
-                                <div>
-                                    <h3>{item.name}</h3>
-                                    <div>
-                                        <div>
-                                            <p>{item.comment}</p>
-                                        </div>
-                                        <div>
-                                            {item.rating}⭐{item.user === user.id ? <MdDelete size={25} style={{ cursor: "pointer" }} onClick={() => handleDeleteReivew(item._id)} /> : ""}
-                                        </div>
+                        {fetchProductData?.data?.reviews.map((item: any) => (
+                            <div key={item._id} className='ReviewItem'>
+                                <h3>{item.name}</h3>
+                                <div className='ReviewContent'>
+                                    <p>{item.comment}</p>
+                                    <div className='ReviewActions'>
+                                        {item.rating > 0 && <div className="product-ratings">
+                                            {Array.from({ length: 5 }, (_, i) => (
+                                                <span key={i} className={i < item?.rating ? 'filled-star' : 'empty-star'}>★</span>
+                                            ))}
+                                        </div>}
+                                        {item.user === user.id && <MdDelete size={25} style={{ cursor: 'pointer' }} onClick={() => handleDeleteReivew(item._id)} />}
                                     </div>
                                 </div>
-                            ))
-                        }
+                            </div>
+                        ))}
                     </main>
                 </div>
             </div>

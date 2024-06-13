@@ -1,17 +1,27 @@
-interface ImageBannerProps {
-    imageUrl: string;
-    title: string;
-    description: string;
-    buttonText?: string;
-    buttonLink?: string;
-}
+import { useEffect, useState } from "react";
+import { ImageBannerProps } from "../types/propsType";
 
-const ImageBanner = ({ imageUrl, title, description, buttonText, buttonLink }: ImageBannerProps) => {
+
+
+const ImageBanner = ({ title, description }: ImageBannerProps) => {
+    const [currentSlide, setCurrentSlide] = useState<number>(0);
+    const images = [
+
+        "../src/assets/bannerImage1.png",
+        "../src/assets/bannerImage2.png",
+        "../src/assets/bannerImage3.png",
+    ]
+    useEffect(() => {
+        const slideInterval = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % images.length);
+        }, 3000);
+        return () => clearInterval(slideInterval);
+    }, [images.length]);
     return (
         <div className="bannerContainer">
             <div className="image-banner">
-                <div className="image" style={{ backgroundImage: `url(${imageUrl})` }}>
-                    <img className="image" src="https://www.touchstoneinfotech.com/wp-content/uploads/2022/10/ecommerce-banner.jpg" />
+                <div className="image"  >
+                    <img className="image" src={images[currentSlide]} />
                     <div className="overlay"></div>
                     <div className="content">
                         <h2>{title}</h2>

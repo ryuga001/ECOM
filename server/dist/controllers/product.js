@@ -11,7 +11,7 @@ export const createProduct = TryCatch(async (req, res, next) => {
     files.forEach(file => {
         images.push({
             imageId: file.filename,
-            url: file.path
+            url: `../uploads/${file.filename}`
         });
     });
     const product = await Product.create({

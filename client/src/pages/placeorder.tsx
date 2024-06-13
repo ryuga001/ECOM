@@ -1,36 +1,11 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/navbar";
+import { usePlaceOrderMutation } from "../store/api";
 import { useAppSelector } from "../store/hook";
-import axios from "axios";
+import { OrderItemTypeShipping, shippingDataType } from "../types/alltypes";
 
-interface OrderItemType {
-    name: string,
-    price: number,
-    quantity: number,
-    image: string,
-    product: string,
-    _id?: string,
-}
-interface paymentInfoType {
-    id: string,
-    status: string,
-}
-interface shippingDataType {
-    address: string,
-    city: string,
-    state: string,
-    country: string,
-    pinCode: string,
-    phoneNo: string,
-    orderedItems: Array<OrderItemType>,
-    user: string,
-    paymentInfo: paymentInfoType,
-    itemsPrice: number,
-    taxPrice: number,
-    shippingPrice: number,
-    totalPrice: number,
-    orderStatus: string,
-}
+
+const BaseUrl = "http://localhost:5000/api/v1";
 
 const PlaceOrder = () => {
     const user = useAppSelector((state) => state.user.user);
@@ -65,7 +40,7 @@ const PlaceOrder = () => {
         let tax = 15;
         let totalPrice = shippingPrice + tax;
 
-        let ordered_item: Array<OrderItemType> = [];
+        let ordered_item: Array<OrderItemTypeShipping> = [];
         cartProduct.map((item) => {
             ordered_item.push({
                 name: item.name,
@@ -86,29 +61,51 @@ const PlaceOrder = () => {
             orderStatus: ("Processing"),
         }))
     }, [])
+    const [PlaceOrder, { isSuccess }] = usePlaceOrderMutation();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // console.log(shippingFormData);
-        const res = await axios.post("http://localhost:5000/api/v1/order/new", {
-            shippingInfo: {
-                address: shippingFormData.address,
-                city: shippingFormData.city,
-                state: shippingFormData.state,
-                country: shippingFormData.country,
-                pinCode: shippingFormData.pinCode,
-                phoneNo: shippingFormData.phoneNo
-            },
-            orderItems: shippingFormData.orderedItems,
-            paymentInfo: shippingFormData.paymentInfo,
-            itemsPrice: shippingFormData.itemsPrice,
-            taxPrice: shippingFormData.taxPrice,
-            shippingPrice: shippingFormData.shippingPrice,
-            totalPrice: shippingFormData.totalPrice
-        });
+
+        // const res = await axios.post(`${BaseUrl}/order/new`, {
+        //     shippingInfo: {
+        //         address: shippingFormData.address,
+        //         city: shippingFormData.city,
+        //         state: shippingFormData.state,
+        //         country: shippingFormData.country,
+        //         pinCode: shippingFormData.pinCode,
+        //         phoneNo: shippingFormData.phoneNo
+        //     },
+        //     orderItems: shippingFormData.orderedItems,
+        //     paymentInfo: shippingFormData.paymentInfo,
+        //     itemsPrice: shippingFormData.itemsPrice,
+        //     taxPrice: shippingFormData.taxPrice,
+        //     shippingPrice: shippingFormData.shippingPrice,
+        //     totalPrice: shippingFormData.totalPrice
+        // });
+        PlaceOrder(
+            {
+                shippingInfo: {
+                    address: shippingFormData.address,
+                    city: shippingFormData.city,
+                    state: shippingFormData.state,
+                    country: shippingFormData.country,
+                    pinCode: shippingFormData.pinCode,
+                    phoneNo: shippingFormData.phoneNo
+                },
+                orderItems: shippingFormData.orderedItems,
+                paymentInfo: shippingFormData.paymentInfo,
+                itemsPrice: shippingFormData.itemsPrice,
+                taxPrice: shippingFormData.taxPrice,
+                shippingPrice: shippingFormData.shippingPrice,
+                totalPrice: shippingFormData.totalPrice
+            }
+        )
+        if (isSuccess) {
+            console.log("orderPlaced");
+        }
     }
     return (
         <>
-            {/* <FaHome style={{ cursor: "pointer", margin: "1rem", }} size={25} /> */}
+
             <NavBar />
             <div className='PlaceOrderContainer'>
                 <main>
@@ -150,7 +147,7 @@ const PlaceOrder = () => {
 
                                 </th>
                                 <td>
-                                    {/* < hr /> */}
+
                                     Rs.{shippingFormData.totalPrice - shippingFormData.taxPrice - shippingFormData.shippingPrice}/-</td>
                             </tr>
                             <tr>
@@ -160,7 +157,7 @@ const PlaceOrder = () => {
                                     Tax :
                                 </th>
                                 <td>
-                                    {/* < hr /> */}
+
                                     Rs.{shippingFormData.taxPrice}/-</td>
                             </tr>
                             <tr>
@@ -170,7 +167,7 @@ const PlaceOrder = () => {
                                     Shpping Price :
                                 </th>
                                 <td>
-                                    {/* < hr /> */}
+
                                     Rs.{shippingFormData.shippingPrice}/-</td>
                             </tr>
                             <tr>
@@ -180,7 +177,7 @@ const PlaceOrder = () => {
                                     Total Amount :
                                 </th>
                                 <td>
-                                    {/* < hr /> */}
+
                                     Rs.{shippingFormData.totalPrice}/-</td>
                             </tr>
                         </tfoot>

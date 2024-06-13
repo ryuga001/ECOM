@@ -1,10 +1,11 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
+import AdminCard from "./components/adminCard"
 import BarChart from "./components/barchart"
 import Cards from "./components/cards"
-import LineChart from "./components/linechart"
+import HorizontalBarChart from "./components/horizontalbar"
 import PieChart from "./components/piechart"
 import SideBar from "./components/sidebar"
-import axios from "axios"
 
 interface analyticsDataType {
     totalProduct?: number,
@@ -33,7 +34,6 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             const res = await axios.get("http://localhost:5000/api/v1/admin/analytics");
-            // console.log(res.data);
             setAnalyticsData({
                 totalProduct: res.data.NOP,
                 totalCustomer: res.data.NOC,
@@ -56,14 +56,17 @@ const Dashboard = () => {
                     <SideBar />
                 </aside>
                 <main>
-
-                    <Cards NOP={analyticsData.totalProduct} NOC={analyticsData.totalCustomer} Sales={analyticsData.totalSales} />
-                    {/* pie chart for male female */}
-                    <PieChart Male={analyticsData.Male} Female={analyticsData.Female} />
-                    {/* bar chart for product categories  */}
-                    <BarChart Categories={analyticsData.Categories} CategoriesData={analyticsData.CategoriesData} />
-                    {/* line chart for order , sales per month */}
-                    <LineChart MonthData={analyticsData.EachMonthData} />
+                    <div className="row">
+                        <Cards NOP={analyticsData.totalProduct} NOC={analyticsData.totalCustomer} Sales={analyticsData.totalSales} Orders={2511} />
+                        <AdminCard />
+                    </div>
+                    <div className="row">
+                        <BarChart MonthData={(analyticsData.EachMonthData ? analyticsData.EachMonthData : [])} />
+                        <PieChart Male={analyticsData.Male} Female={analyticsData.Female} />
+                    </div>
+                    <div className="row">
+                        <HorizontalBarChart categories={analyticsData.Categories} categoriesData={analyticsData.CategoriesData} />
+                    </div>
                 </main>
             </div>
         </>

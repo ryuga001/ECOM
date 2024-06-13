@@ -1,28 +1,26 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { UserDataType, UserType } from "../types/alltypes";
 
-
-
-
-export interface UserDataType {
-    id: string,
-    username: string,
-    email: string,
-    profileImage: string,
-    role?: string,
-}
-export interface UserType {
-    user: UserDataType,
-}
 const initialState: UserType = {
     user: {
-        id: "",
-        username: "",
-        email: "",
-        profileImage: "",
-        role: "user",
+        id: (sessionStorage.getItem("id") || ""),
+        username: (sessionStorage.getItem("username") || ""),
+        email: (sessionStorage.getItem("email") || ""),
+        profileImage: (sessionStorage.getItem("profileImage") || ""),
+        role: (sessionStorage.getItem("role") || "user"),
+
     }
 }
-
+// function getCookieValue(name: string) {
+//     const nameEQ = name + "=";
+//     const ca = document.cookie.split(';');
+//     for (let i = 0; i < ca.length; i++) {
+//         let c = ca[i];
+//         while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+//         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+//     }
+//     return null;
+// }
 export const UserSlice = createSlice({
     name: 'user',
     initialState,

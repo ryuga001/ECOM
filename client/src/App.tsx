@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminProduct from './admin/products';
 import AdminOrder from './admin/orders';
 import AdminCustomer from './admin/customers';
-// import { LoggedRoute } from './components/privateroutes';
+
 const Dashboard = lazy(() => import('./admin/dashboard'));
 const Loader = lazy(() => import('./components/loader'));
 const MyOrder = lazy(() => import('./pages/myorder'));

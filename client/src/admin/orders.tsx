@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
 import SideBar from './components/sidebar';
+import DataGridDemo from './components/table';
 
 const AdminOrder = () => {
     const [orders, setOrders] = useState<Array<any>>([]);
@@ -40,44 +41,48 @@ const AdminOrder = () => {
         ));
     };
     return (
-        <div className="AdminContainer">
-            <aside>
-                <SideBar />
-            </aside>
-            <main>
-                <h2>Orders</h2>
-                <table className='TableStyle'>
-                    <thead>
-                        <th>Id</th>
-                        <th>Address</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                    </thead>
-                    <tbody>
-                        {
-                            renderTableData()
-                        }
-                    </tbody>
-                    <tfoot>
-                        {totalPages > 1 && <div className='PaginationBox'>
-                            <button onClick={() => {
-                                if (currentPage > 0) {
-                                    setCurrentPage(currentPage - 1);
-                                }
-                            }} disabled={currentPage === 0}><HiArrowLeft /></button>
-                            {/* {CurrentPage > 2 && "..."} */}
-                            {/* <button >{CurrentPage}</button> */}
-                            {/* {CurrentPage < totalPages - 2 && "..."} */}
-                            <button onClick={() => {
-                                if (currentPage < totalPages - 1) {
-                                    setCurrentPage(currentPage + 1);
-                                }
-                            }} disabled={currentPage === totalPages - 1}><HiArrowRight /></button>
-                        </div>}
-                    </tfoot>
-                </table>
-            </main>
-        </div>
+        <>
+            <div className="AdminContainer">
+                <aside>
+                    <SideBar />
+                </aside>
+                <main>
+                    <h2>Orders</h2>
+                    <table className='TableStyle'>
+                        <thead>
+                            <th>Id</th>
+                            <th>Address</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody>
+                            {
+                                renderTableData()
+                            }
+                        </tbody>
+                        <tfoot>
+                            {totalPages > 1 && <div className='PaginationBox2'>
+                                <button onClick={() => {
+                                    if (currentPage > 0) {
+                                        setCurrentPage(currentPage - 1);
+                                    }
+                                }} disabled={currentPage === 0}><HiArrowLeft /></button>
+                                {/* {CurrentPage > 2 && "..."} */}
+                                {/* <button >{CurrentPage}</button> */}
+                                {/* {CurrentPage < totalPages - 2 && "..."} */}
+                                <button onClick={() => {
+                                    if (currentPage < totalPages - 1) {
+                                        setCurrentPage(currentPage + 1);
+                                    }
+                                }} disabled={currentPage === totalPages - 1}><HiArrowRight /></button>
+                            </div>}
+                        </tfoot>
+                    </table>
+                </main>
+
+            </div>
+
+        </>
     )
 }
 

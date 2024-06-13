@@ -1,12 +1,5 @@
 import { useNavigate } from "react-router-dom"
-
-interface ProductPropsType {
-    pid?: string,
-    name?: string,
-    imgUrl?: string,
-    price?: number,
-    ratings: number,
-}
+import { ProductPropsType } from "../types/propsType";
 
 const ProductCard = ({ pid, name, imgUrl, price, ratings }: ProductPropsType) => {
     const navigate = useNavigate();
@@ -17,8 +10,15 @@ const ProductCard = ({ pid, name, imgUrl, price, ratings }: ProductPropsType) =>
                 <h3>{name}</h3>
 
                 <div>
-                    <span>₹{price}</span>
-                    {ratings > 1 && <span>{ratings}⭐</span>}
+                    <span className="product-price">₹{price}</span>
+                    {ratings > 1 &&
+                        <div className="product-ratings">
+                            {Array.from({ length: 5 }, (_, i) => (
+                                <span key={i} className={i < ratings ? 'filled-star' : 'empty-star'}>★</span>
+                            ))}
+                        </div>
+
+                    }
                 </div>
             </div>
         </div>

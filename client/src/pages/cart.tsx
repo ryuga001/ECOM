@@ -3,46 +3,18 @@ import { removeProduct } from '../store/cartSlice';
 import { useAppDispatch, useAppSelector } from "../store/hook";
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/navbar';
-export interface ProductType {
-    id: string,
-    name: string,
-    quantity: number,
-    price: number,
-    imgUrl: string,
+import { ProductTypeCartPage } from '../types/propsType';
 
-}
 
-// let columns: Column<ProductType>[] = [
-//     {
-//         Header: "ID",
-//         accessor: "id",
-//     },
-
-//     {
-//         Header: "Name",
-//         accessor: "name",
-//     },
-//     {
-//         Header: "Quantity",
-//         accessor: "quantity",
-//     },
-//     {
-//         Header: "Price",
-//         accessor: "price",
-//     }
-// ]
 const Cart = () => {
     const cartProduct = useAppSelector(state => state.cart.cartProduct);
-    // const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-    //     columns, data: cartProduct,
-    // }, useSortBy,
-    // )
+
 
     const dispatch = useAppDispatch();
     const priceCalculate = () => {
         let total = 0;
 
-        cartProduct.forEach((item: ProductType) => {
+        cartProduct.forEach((item: ProductTypeCartPage) => {
             total += item.price * item.quantity;
             console.log(item.imgUrl);
         })
@@ -56,37 +28,7 @@ const Cart = () => {
         <>
             <NavBar />
             <div className="CartContainer">
-                {/* <table {...getTableProps()}>
-                <thead>
-                    {
-                        headerGroups.map((hg) => (
-                            <tr {...hg.getHeaderGroupProps()} >
-                            {
-                                hg.headers.map((header) => (
-                                    <th {...header.getHeaderProps()} >{header.render("Header")}</th>
-                                ))
-                            }
-                            </tr>
-                        ))
-                    }
-                </thead>
-                <tbody {...getTableBodyProps()}>
-                    {
-                        rows.map(row => {
-                            prepareRow(row)
-                            return <tr {...row.getRowProps()}>
-                            {
-                                row.cells.map((cell) => (
-                                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                                ))
-                            }
-                            </tr>
-                        })
-                    }
-                    </tbody>
-                </table> */}
                 <div>
-
                     < FaCartShopping size={60} color='gray' />
                 </div>
 
@@ -137,7 +79,7 @@ const Cart = () => {
                                             Total Amount :
                                         </th>
                                         <td>
-                                            {/* < hr /> */}
+
                                             Rs.{priceCalculate()
                                             }/-</td>
                                     </tr>

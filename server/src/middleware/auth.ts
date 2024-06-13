@@ -4,11 +4,10 @@ import User from "../models/user.js";
 import { AuthenticatedRequest } from "../utils/types.js";
 import ErrorHandler from "../utils/utility-class.js";
 import { TryCatch } from "./error.js";
-import { config } from "dotenv";
-config({
-    path: "../.env",
-})
-const SECRET = process.env.JWT_SECRET || "SECRET";
+import dotenv from "dotenv";
+dotenv.config()
+
+const SECRET = process.env.JWT_SECRET || "";
 export const isAuthenticatedUser = TryCatch(
     async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
         const { token } = req.cookies;
