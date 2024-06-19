@@ -38,7 +38,7 @@ const Login = () => {
             ...prev, [name]: value,
         }))
     }
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (login) {
@@ -108,7 +108,7 @@ const Login = () => {
                             </div>
                             <div>
 
-                                <input id="username" placeholder="username" value={formData.username} name="username" onChange={handleChange} />
+                                <input type="text" id="username" placeholder="username" value={formData.username} name="username" onChange={handleChange} />
                             </div></>
                     }
                     {
