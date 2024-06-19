@@ -6,7 +6,7 @@ import { allProductsResponseType, categoriesResponseType, productPostType } from
 export const API = createApi({
     reducerPath: 'API',
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5000/api/v1/",
+        baseUrl: import.meta.env.VITE_BASE_URL,
         prepareHeaders(headers) {
             return headers;
         },
@@ -73,13 +73,13 @@ export const API = createApi({
                 body: shippingData
             })
         }),
-        // error 
+
         getMyOrders: builder.query<any, void>({
             query: () => ({
                 url: "order/orders/me",
             })
         }),
-        // admin-api
+        // admin-api's 
         getAdminCustomers: builder.query<any, void>({
             query: () => "user/admin/users"
         })
