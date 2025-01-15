@@ -12,14 +12,14 @@ import { connectDB } from "./utils/feature.js";
 
 dotenv.config()
 
-// env constants 
+
 const PORT = process.env.PORT || 8000;
 const mongoURI = process.env.MONGO_URI || "";
 
 const app = express();
-// app use 
+
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
 }));
 app.use(cookieParser())

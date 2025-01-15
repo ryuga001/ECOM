@@ -1,110 +1,97 @@
-import { useEffect, useState } from 'react'
-import SideBar from './components/sidebar'
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
+import { getAdminCustomers } from '../route';
+import SideBar from './components/sidebar';
 
-interface UserType {
-    id: string,
-    username: string,
-    email: string,
-    avatar: string,
-    role: string,
-    gender: string,
-}
+
 
 const AdminCustomer = () => {
     const [customer, setCustomer] = useState<Array<any>>([]);
-    // const { customer } = useGetAdminCustomersQuery();
     useEffect(() => {
         const fetchData = async () => {
-            const res = await axios.get("http://localhost:5000/api/v1/user/admin/users");
-            setCustomer(res.data.data);
-        }
+            const res = await getAdminCustomers();
+            if (res)
+                setCustomer(res.data);
+        };
         fetchData();
-    }, [])
+    }, []);
 
-    // pagination 
+
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState<number>(0);
     const totalPages = Math.ceil(customer.length / itemsPerPage);
-    const renderPageButtons = () => {
-        const pages = [];
-        for (let i = 0; i < totalPages; i++) {
-            pages.push(
-                <button key={i} style={{ backgroundColor: currentPage === i ? "lightblue" : "" }
-                } onClick={() => setCurrentPage(i)} > {i + 1}</button >
-            );
-        }
-        return pages;
-    };
+
     const renderTableData = () => {
         const startIndex = currentPage * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         return customer.slice(startIndex, endIndex).map((item, index) => (
-            <tr key={startIndex + index}>
-                <td><img src={item.avatar} alt="loading" /></td>
-                <td>{item.username}</td>
-                <td>{item.email}</td>
-                <td>{item.gender}</td>
-                <td>{item.role === 'user' ? <span style={{
-                    backgroundColor: 'lightgreen',
-                    padding: '6px',
-                    borderRadius: '0.5rem',
-                }}>User</span> : <span
-                    style={{
-                        backgroundColor: 'orange',
-                        padding: '6px',
-                        borderRadius: '0.5rem',
-                    }}
-                >Admin</span>}</td>
+            <tr key={startIndex + index} className="hover:bg-gray-100 transition duration-200">
+                <td className="p-4">
+                    <img src={item.avatar} alt="Avatar" className="w-10 h-10 rounded-full" />
+                </td>
+                <td className="p-4">{item.username}</td>
+                <td className="p-4">{item.email}</td>
+                <td className="p-4">{item.gender}</td>
+                <td className="p-4">
+                    {item.role === 'user' ? (
+                        <span className="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm">User</span>
+                    ) : (
+                        <span className="bg-orange-200 text-orange-800 px-3 py-1 rounded-full text-sm">Admin</span>
+                    )}
+                </td>
             </tr>
         ));
     };
+
     return (
-        <div className="AdminContainer">
-            <aside>
-                <SideBar />
-            </aside>
-            <main>
-                <h2>Customers</h2>
+        <div className="flex min-h-screen bg-gray-50">
 
-                <table className='TableStyle'>
-                    <thead>
-                        <th>Avatar</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Gender</th>
-                        <th>Role</th>
-                    </thead>
-                    <tbody>
-                        {
-                            renderTableData()
-                        }
-                    </tbody>
-                    <tfoot>
+            <SideBar />
 
-                        {totalPages > 1 && <div className='PaginationBox2'>
-                            <button onClick={() => {
-                                if (currentPage > 0) {
-                                    setCurrentPage(currentPage - 1);
-                                }
-                            }} disabled={currentPage === 0}><HiArrowLeft /></button>
-                            {/* {CurrentPage > 2 && "..."} */}
-                            {/* <button >{CurrentPage}</button> */}
-                            {/* {CurrentPage < totalPages - 2 && "..."} */}
-                            <button onClick={() => {
-                                if (currentPage < totalPages - 1) {
-                                    setCurrentPage(currentPage + 1);
-                                }
-                            }} disabled={currentPage === totalPages - 1}><HiArrowRight /></button>
-                        </div>}
+            <main className="flex-1 p-6">
+                <h2 className="text-3xl font-semibold text-gray-800 mb-6">Customers</h2>
+                <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+                    <table className="w-full table-auto">
+                        <thead className="bg-gray-200">
+                            <tr>
+                                <th className="p-4 text-left text-gray-600">Avatar</th>
+                                <th className="p-4 text-left text-gray-600">Username</th>
+                                <th className="p-4 text-left text-gray-600">Email</th>
+                                <th className="p-4 text-left text-gray-600">Gender</th>
+                                <th className="p-4 text-left text-gray-600">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderTableData()}
+                        </tbody>
+                    </table>
+                </div>
 
-                    </tfoot>
 
-                </table>
+                {totalPages > 1 && (
+                    <div className="mt-4 flex items-center justify-between">
+                        <button
+                            onClick={() => currentPage > 0 && setCurrentPage(currentPage - 1)}
+                            disabled={currentPage === 0}
+                            className="flex items-center justify-center bg-gray-200 p-2 rounded-full cursor-pointer disabled:bg-gray-300 hover:bg-gray-300 transition duration-200"
+                        >
+                            <HiArrowLeft className="text-lg text-gray-600" />
+                        </button>
+                        <span className="text-sm text-gray-600">
+                            Page {currentPage + 1} of {totalPages}
+                        </span>
+                        <button
+                            onClick={() => currentPage < totalPages - 1 && setCurrentPage(currentPage + 1)}
+                            disabled={currentPage === totalPages - 1}
+                            className="flex items-center justify-center bg-gray-200 p-2 rounded-full cursor-pointer disabled:bg-gray-300 hover:bg-gray-300 transition duration-200"
+                        >
+                            <HiArrowRight className="text-lg text-gray-600" />
+                        </button>
+                    </div>
+                )}
             </main>
         </div>
-    )
-}
+    );
+};
 
-export default AdminCustomer
+export default AdminCustomer;

@@ -1,15 +1,14 @@
-
-
 import { Chart as ChartJS, Legend, ArcElement, Tooltip } from "chart.js";
-import { Pie } from "react-chartjs-2"
+import { Pie } from "react-chartjs-2";
+
 ChartJS.register(Tooltip, Legend, ArcElement);
 
 interface PropsType {
-    Male?: number,
-    Female?: number,
+    Male?: number;
+    Female?: number;
 }
 
-const PieChart = ({ Male = 0, Female = 0 }: PropsType) => {
+const PieChart = ({ Male = 54, Female = 44 }: PropsType) => {
     const options = {
         responsive: true,
         plugins: {
@@ -36,13 +35,13 @@ const PieChart = ({ Male = 0, Female = 0 }: PropsType) => {
             },
         },
     };
-
+    const male = Male; const female = Female;
     const pieChartData = {
         labels: ['Male', 'Female'],
         datasets: [
             {
                 label: 'Count',
-                data: [Male, Female],
+                data: [54, 44],
                 backgroundColor: [
                     'rgba(54, 162, 235, 0.6)', // Male: Blue
                     'rgba(255, 99, 132, 0.6)', // Female: Red
@@ -59,9 +58,12 @@ const PieChart = ({ Male = 0, Female = 0 }: PropsType) => {
             },
         ],
     };
-    return (
-        <div className="Pie-chart-container"> <Pie options={options} data={pieChartData} /></div>
-    )
-}
 
-export default PieChart
+    return (
+
+        <Pie options={options} data={pieChartData} />
+
+    );
+};
+
+export default PieChart;

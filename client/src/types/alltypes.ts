@@ -91,7 +91,7 @@ export interface UserDataType {
     username: string,
     email: string,
     profileImage: string,
-    role?: string,
+    role: string,
 
 }
 export interface UserType {

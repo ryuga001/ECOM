@@ -1,17 +1,24 @@
-import ImageBanner from "../components/banner"
-import NavBar from "../components/navbar"
-import Product from "../components/product"
+import ImageBanner from "../components/banner";
+import Footer from "../components/footer";
+import NavBar from "../components/navbar";
+import Product from "../components/product";
+
 const Home = () => {
     return (
-        <div className="HomeContainer">
+        <div >
             <NavBar />
             <ImageBanner
-                title="Welcome to Our Website"
+                title="Welcome to SHOPPER"
                 description="Discover amazing products and services."
             />
-            <Product />
-        </div>
-    )
-}
 
-export default Home
+            <div className="px-4 sm:px-8 md:px-16 py-12 bg-orange-50">
+                <Product />
+            </div>
+            <Footer />
+        </div>
+
+    );
+};
+
+export default Home;
